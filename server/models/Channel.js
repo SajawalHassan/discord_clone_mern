@@ -6,6 +6,12 @@ const channelSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    default: "",
+    min: 1,
+    max: 500,
+  },
   categoryId: {
     type: String,
     required: true,

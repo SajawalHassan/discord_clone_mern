@@ -36,3 +36,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE0OGI4Y
     "title": "First server",
     "description": "This is a description of 'first server'!"
 }
+
+###
+
+PUT http://localhost:5000/api/servers/update/6314a64ba8d4e9101689802a
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE0OGI4YjliMWY2M2E3NjYxZjc3NDUiLCJ1c2VybmFtZSI6IkJvYiIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImNyZWF0ZWRTZXJ2ZXJzIjpbXSwiam9pbmVkU2VydmVycyI6W10sImlhdCI6MTY2MjI5OTQ0MCwiZXhwIjoxNjYyMzAxMjQwfQ.FrikfbqI-0jIAUqu50LMPWZW6gqhdAqo6MAsJEtj1TU
+
+{
+    "title": "1"
+}

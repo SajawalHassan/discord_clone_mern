@@ -1,21 +1,24 @@
 const Server = require("../models/Server");
 const Category = require("../models/Category");
 const Channel = require("../models/Channel");
-const { serverCreateValidation } = require("../utils/validation");
+const {
+  serverCreateValidation,
+  serverUpdateValidation,
+} = require("../utils/validation");
 
 module.exports.createServer = async (req, res) => {
   // Validating info
-  const { error } = serverCreateValidation(req.body);
-  if (error) return res.status(400).json(error.details[0].message);
+  const { error } = serverCreateValidation(req?.body);
+  if (error) return res?.status(400).json(error?.details[0]?.message);
 
   try {
     // Creating server with default categories and channels
     const newServer = new Server({
-      banner: req.body.banner,
-      image: req.body.image,
-      title: req.body.title,
-      description: req.body.description,
-      ownerId: req.user._id,
+      banner: req?.body?.banner,
+      image: req?.body?.image,
+      title: req?.body?.title,
+      description: req?.body?.description,
+      ownerId: req?.user?._id,
     });
 
     const newTextCategory = new Category({
@@ -44,7 +47,7 @@ module.exports.createServer = async (req, res) => {
     await newVoiceCategory.save();
     await newVoiceChannel.save();
 
-    res.json({
+    res?.json({
       newServer,
       newTextCategory,
       newTextChannel,
@@ -52,6 +55,27 @@ module.exports.createServer = async (req, res) => {
       newVoiceChannel,
     });
   } catch (error) {
-    res.json({ error: error.message });
+    res?.json({ error: error?.message });
+  }
+};
+
+module.exports.updateServer = async (req, res) => {
+  // Validating info
+  const { error } = serverUpdateValidation(req?.body);
+  if (error) return res?.status(400).json(error?.details[0]?.message);
+
+  try {
+    const server = await Server.findById(req.params.id);
+
+    // Server and security validation
+    if (!server) return res?.status(404).json("Server not found!");
+    if (!server?.ownerId == req?.user?._id)
+      return res?.status(403).json("You are not the owner!");
+
+    await server.updateOne({ $set: req.body });
+
+    res?.json("Server successfully updated!");
+  } catch (error) {
+    res?.json({ error: error?.message });
   }
 };

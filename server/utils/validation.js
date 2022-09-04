@@ -21,3 +21,14 @@ module.exports.serverCreateValidation = (data) => {
 
   return schema.validate(data);
 };
+
+module.exports.serverUpdateValidation = (data) => {
+  const schema = joi.object({
+    banner: joi.string().allow(""),
+    image: joi.string().allow(""),
+    title: joi.string().allow("").min(3).max(255),
+    description: joi.string().allow("").min(15).max(1000),
+  });
+
+  return schema.validate(data);
+};
