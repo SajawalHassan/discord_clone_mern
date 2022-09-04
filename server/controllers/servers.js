@@ -67,9 +67,8 @@ module.exports.updateServer = async (req, res) => {
   try {
     const server = await Server.findById(req.params.id);
 
-    // Server and security validation
-    if (!server) return res?.status(404).json("Server not found!");
-    if (!server?.ownerId == req?.user?._id)
+    // security validation
+    if (server?.ownerId !== req?.user?._id)
       return res?.status(403).json("You are not the owner!");
 
     await server.updateOne({ $set: req.body });
