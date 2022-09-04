@@ -7,6 +7,7 @@ const helmet = require("helmet");
 require("dotenv").config();
 
 const authRouter = require("./routes/auth");
+const serversRouter = require("./routes/servers");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(helmet());
 
 // Routes middleware
 app.use("/api/auth", authRouter);
+app.use("/api/servers", serversRouter);
 
 // Connecting to mongodb
 mongoose.connect(process.env.MONGO_URI, () =>
