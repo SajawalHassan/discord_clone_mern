@@ -16,3 +16,18 @@ Content-Type: application/json
     "email": "bob@gmail.com",
     "password": "123456789"
 }
+
+###
+
+GET http://localhost:5000/api/auth/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE0NGM4ZmIxNmNmODY1MTM5YTVkYTUiLCJ1c2VybmFtZSI6IkJvYiIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJHdjdVd3bUVNalBkSU5SdUFPLk56Sy5QNzFkeUNiTVJER0NqVDB0NHVZWHQvMnNxNEozd3VhIiwiY3JlYXRlZFNlcnZlcnMiOltdLCJfX3YiOjAsImpvaW5lZFNlcnZlcnMiOltdLCJpYXQiOjE2NjIyODk2MjB9.TP6gTa_qtrWA67ak1IvC2tOj1Ml1IRFjCw5Vu-ptEXc"
+}
+
+###
+
+GET http://localhost:5000/api/auth/protected
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE0NGM4ZmIxNmNmODY1MTM5YTVkYTUiLCJ1c2VybmFtZSI6IkJvYiIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImNyZWF0ZWRTZXJ2ZXJzIjpbXSwiam9pbmVkU2VydmVycyI6W10sImlhdCI6MTY2MjI4OTg2NSwiZXhwIjoxNjYyMjg5ODgwfQ.o3zQ8CF6JqmO8ELlW2vBcXK7qcokmtKi7uszHlh4sGQ

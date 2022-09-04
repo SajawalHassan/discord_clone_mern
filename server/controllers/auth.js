@@ -33,6 +33,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Validating info
     const user = await User.findOne({ email: email });
     if (!user) return res.status(400).json("Invalid email or password");
 
@@ -74,4 +75,43 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const refreshToken = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    const _refreshToken = await RefreshToken.findOne({
+      refreshToken: refreshToken,
+    });
+
+    if (refreshToken == null) return res.status(401);
+    if (!_refreshToken) return res.status(403);
+
+    // Verifying token and sending new access token
+    jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET,
+      (error, user) => {
+        if (error) return res.json({ error: error.message });
+
+        const payload = {
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+          createdServers: user.createdServers,
+          joinedServers: user.joinedServers,
+        };
+
+        const accessToken = generateAccessToken(payload);
+
+        res.json({ accessToken });
+      }
+    );
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};
+
+const protected = async (req, res) => {
+  res.json(req.user.username);
+};
+
+module.exports = { register, login, protected, refreshToken };
