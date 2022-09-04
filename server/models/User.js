@@ -23,7 +23,7 @@ const userSchema = new Schema({
     type: Array,
     default: [],
   },
-  joinedServer: {
+  joinedServers: {
     type: Array,
     default: [],
   },
