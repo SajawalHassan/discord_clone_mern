@@ -78,3 +78,25 @@ module.exports.updateServer = async (req, res) => {
     res?.json({ error: error?.message });
   }
 };
+
+module.exports.deleteServer = async (req, res) => {
+  try {
+    const server = await Server.findById(req.params.id);
+
+    const categories = await Category.find({ serverId: server._id });
+    const channels = await Channel.find({ categoryId: categories._id });
+
+    // security validation
+    if (server?.ownerId !== req?.user?._id)
+      return res?.status(403).json("You are not the owner!");
+
+    await Channel.deleteMany({ where: { categoryId: categories._id } });
+    await Category.deleteMany({ where: { serverId: server._id } });
+
+    await server.deleteOne();
+
+    res?.json("Server successfully deleted!");
+  } catch (error) {
+    res?.status(500).json({ error: error?.message });
+  }
+};
