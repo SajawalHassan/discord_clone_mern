@@ -100,3 +100,7 @@ module.exports.refreshToken = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+module.exports.protected = (req, res) => {
+  res.json({ user: req.user });
+};
