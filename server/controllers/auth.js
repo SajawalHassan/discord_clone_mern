@@ -1,58 +1,65 @@
 const User = require("../models/User");
+const RefreshToken = require("../models/RefreshToken");
 const bcrypt = require("bcrypt");
+const generateAccessToken = require("../utils/generateAccessToken");
 const jwt = require("jsonwebtoken");
 
 const { userRegistrationValidation } = require("../utils/validation");
-const generateAccessToken = require("../utils/generateAccessToken");
-const RefreshToken = require("../models/RefreshToken");
 
-const register = async (req, res) => {
+module.exports.register = async (req, res) => {
+  let { username, email, password } = req.body;
+
   // Validating info
-  const { error } = userRegistrationValidation(req?.body);
-  if (error) return res?.status(400).json(error.details[0].message);
+  const { error } = userRegistrationValidation(req.body);
+  if (error) return res.json(error.details[0].message);
+
+  // Making sure email doesn't already exist
+  const emailExists = await User.findOne({ email });
+  if (emailExists) return res.status(400).json("Email already exists");
+
+  // Hashing password
+  password = await bcrypt.hash(password, 10);
+
+  const newUser = new User({
+    username,
+    email,
+    password,
+  });
 
   try {
-    // Hashing password
-    hashedPassword = await bcrypt.hash(req?.body?.password, 10);
-
-    const newUser = new User({
-      username: req?.body?.username,
-      email: req?.body?.email,
-      password: hashedPassword,
-    });
-
     await newUser.save();
 
-    res?.json(newUser);
+    res.json(newUser);
   } catch (error) {
-    res?.json({ error: error?.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
-const login = async (req, res) => {
+module.exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req?.body;
+    // Validating email
+    const userEmail = await User.findOne({ email: email });
+    if (!userEmail) return res.status(400).json("Invalid email or password");
 
-    // Validating info
-    const user = await User.findOne({ email: email });
-    if (!user) return res?.status(400).json("Invalid email or password");
-
-    const validPassword = await bcrypt.compare(password, user?.password);
+    // Validating password
+    const validPassword = await bcrypt.compare(password, userEmail?.password);
     if (!validPassword)
-      return res?.status(400).json("Invalid email or password");
+      return res.status(400).json("Invalid email or password");
 
     const payload = {
-      _id: user?._id,
-      username: user?.username,
-      email: user?.email,
-      createdServers: user?.createdServers,
-      joinedServers: user?.joinedServers,
+      username: userEmail.username,
+      email: userEmail.email,
+      joinedServers: userEmail.joinedServers,
+      createdServers: userEmail.createdServers,
+      _id: userEmail._id,
     };
 
-    // Creating refresh and access tokens
+    // Creating access and refresh tokens
     const accessToken = generateAccessToken(payload);
     const refreshToken = jwt.sign(
-      user?.toJSON(),
+      userEmail.toJSON(),
       process.env.REFRESH_TOKEN_SECRET
     );
 
@@ -62,56 +69,34 @@ const login = async (req, res) => {
 
     await newRefreshToken.save();
 
-    res?.json({
-      accessToken,
-      refreshToken,
-      username: user?.username,
-      email: user?.email,
-      createdServers: user?.createdServers,
-      joinedServers: user?.joinedServers,
-    });
+    res.json({ accessToken, refreshToken });
   } catch (error) {
-    res?.json({ error: error?.message });
+    console.log({ error: error.message });
   }
 };
 
-const refreshToken = async (req, res) => {
+module.exports.refreshToken = async (req, res) => {
   try {
-    const { refreshToken } = req?.body;
+    const { refreshToken } = req.body;
     const _refreshToken = await RefreshToken.findOne({
-      refreshToken: refreshToken,
-    });
-
-    if (refreshToken == null) return res?.status(401);
-    if (!_refreshToken) return res?.status(403);
-
-    // Verifying token and sending new access token
-    jwt.verify(
       refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-      (error, user) => {
-        if (error) return res?.json({ error: error.message });
+    });
+    if (refreshToken == null) return res.sendStatus(401);
+    if (!_refreshToken) return res.sendStatus(403);
 
-        const payload = {
-          _id: user?._id,
-          username: user?.username,
-          email: user?.email,
-          createdServers: user?.createdServers,
-          joinedServers: user?.joinedServers,
-        };
-
-        const accessToken = generateAccessToken(payload);
-
-        res?.json({ accessToken });
-      }
-    );
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      if (err) return res.status(403).json(err);
+      const payload = {
+        username: user.username,
+        email: user.email,
+        joinedServers: user.joinedServers,
+        createdServers: user.createdServers,
+        _id: user._id,
+      };
+      const accessToken = generateAccessToken(payload);
+      res.json({ accessToken: accessToken });
+    });
   } catch (error) {
-    res?.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
-
-const protected = async (req, res) => {
-  res?.json(req?.user?.username);
-};
-
-module.exports = { register, login, protected, refreshToken };

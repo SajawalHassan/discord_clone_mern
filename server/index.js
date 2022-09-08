@@ -1,13 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const morgan = require("morgan");
 const helmet = require("helmet");
+const morgan = require("morgan");
+
+const authRoutes = require("./routes/auth");
 
 require("dotenv").config();
-
-const authRouter = require("./routes/auth");
-const serversRouter = require("./routes/servers");
 
 const app = express();
 
@@ -19,14 +18,13 @@ app.use(morgan("common"));
 app.use(helmet());
 
 // Routes middleware
-app.use("/api/auth", authRouter);
-app.use("/api/servers", serversRouter);
+app.use("/api/auth", authRoutes);
 
 // Connecting to mongodb
 mongoose.connect(process.env.MONGO_URI, () =>
-  console.log("Connceted to mongodb!")
+  console.log("Connected to mongodb")
 );
 
-// Starting our server
+// Starting server
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+app.listen(port, () => console.log(`server listening on port ${port}`));

@@ -3,37 +3,19 @@ const { Schema, model } = mongoose;
 
 const userSchema = new Schema(
   {
-    username: {
+    username: String,
+    email: String,
+    password: String,
+    joinedServers: {
       type: String,
-      required: true,
-      min: 3,
-      max: 255,
-    },
-    email: {
-      type: String,
-      required: true,
-      min: 6,
-      max: 255,
-    },
-    password: {
-      type: String,
-      required: true,
-      min: 8,
+      default: [],
     },
     createdServers: {
-      type: Array,
-      default: [],
-    },
-    joinedServers: {
-      type: Array,
-      default: [],
-    },
-    profilePic: {
       type: String,
-      default: "",
+      default: [],
     },
   },
-  { timestamps: true }
+  { timestamps: true, typeKey: "$type" }
 );
 
 module.exports = model("Users", userSchema);
