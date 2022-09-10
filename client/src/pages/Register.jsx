@@ -16,7 +16,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";
 import Loader from "../components/Loader";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  registerFail,
+  registerSuccess,
+  setIsLoading,
+} from "../features/registerSlice";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -25,10 +30,12 @@ function Register() {
   const [month, setMonth] = useState("");
   const [day, setDay] = useState(1);
   const [year, setYear] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { isAuth } = useSelector((state) => state.login);
+  const { error, isLoading } = useSelector((state) => state.register);
 
   useEffect(() => {
     if (isAuth) {
@@ -39,7 +46,7 @@ function Register() {
   const handleOnClick = async (e) => {
     e.preventDefault();
 
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
     try {
       await axios.post("/auth/register", {
         username,
@@ -50,11 +57,10 @@ function Register() {
         year,
       });
 
-      setIsLoading(false);
+      dispatch(registerSuccess());
       navigate("/login");
     } catch (error) {
-      setIsLoading(false);
-      console.log(error.response.data);
+      dispatch(registerFail(error.response.data));
     }
   };
 
@@ -78,7 +84,8 @@ function Register() {
           </h1>
           <div className="space-y-5">
             <InputField
-              loginErr={false}
+              error={error ? true : false}
+              errorMsg={error}
               maxLength={255}
               minLength={3}
               type="email"
@@ -87,7 +94,7 @@ function Register() {
               setValue={setEmail}
             />
             <InputField
-              loginErr={false}
+              error={false}
               maxLength={255}
               minLength={3}
               type="text"
@@ -96,7 +103,7 @@ function Register() {
               setValue={setUsername}
             />
             <InputField
-              loginErr={false}
+              error={false}
               maxLength={255}
               minLength={8}
               type="password"

@@ -12,7 +12,7 @@ module.exports.register = async (req, res) => {
   const { error } = userRegistrationValidation(req.body);
   if (error) return res.json(error.details[0].message);
   if (email.includes(" "))
-    return res.status(400).json("Emails cannot be a space");
+    return res.status(400).json("Emails cannot be contain spaces");
 
   // Making sure email doesn't already exist
   const emailExists = await User.findOne({ email });

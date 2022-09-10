@@ -22,8 +22,7 @@ const Login = () => {
     if (isAuth) {
       navigate("/");
     }
-    dispatch(loginFail(""));
-  }, [dispatch, isAuth, navigate]);
+  }, []);
 
   const handleOnClick = async (e) => {
     e.preventDefault();
@@ -66,14 +65,16 @@ const Login = () => {
               label="Email"
               value={email}
               setValue={setEmail}
-              loginErr={error ? true : false}
+              error={error ? true : false}
+              errorMsg={error}
             />
             <InputField
               type="password"
               label="Password"
               value={password}
               setValue={setPassword}
-              loginErr={error ? true : false}
+              error={error ? true : false}
+              errorMsg={error}
             />
           </div>
           <p className="text-xs text-link mt-1">Forgot your password?</p>

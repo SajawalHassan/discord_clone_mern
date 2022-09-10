@@ -1,5 +1,5 @@
 import "./App.css";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginFail, loginSuccess } from "./features/loginSlice";
 import { axiosAuth } from "./api/axios";
@@ -12,7 +12,7 @@ function App() {
 
   const { user } = useSelector((state) => state.user);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       const getUser = async () => {
@@ -33,6 +33,7 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
+    dispatch(loginFail(""));
     navigate("/login");
   };
 
