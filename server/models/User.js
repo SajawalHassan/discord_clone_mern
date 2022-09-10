@@ -6,17 +6,12 @@ const userSchema = new Schema(
     username: String,
     email: String,
     password: String,
-    joinedServers: {
-      type: String,
-      default: [],
-    },
-    createdServers: {
-      type: String,
-      default: [],
-    },
+    joinedServers: Array,
+    createdServers: Array,
     month: String,
     day: Number,
     year: String,
+    profilePic: String,
   },
   { timestamps: true, typeKey: "$type" }
 );

@@ -6,6 +6,7 @@ const morgan = require("morgan");
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
+const serverRoutes = require("./routes/servers");
 
 require("dotenv").config();
 
@@ -21,6 +22,7 @@ app.use(helmet());
 // Routes middleware
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/servers", serverRoutes);
 
 // Connecting to mongodb
 mongoose.connect(process.env.MONGO_URI, () =>

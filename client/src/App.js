@@ -4,10 +4,13 @@ import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "./features/loginSlice";
 import { axiosAuth } from "./api/axios";
 import { setUser } from "./features/userSlice";
+import { useNavigate } from "react-router-dom";
+
 import Sidebar from "./components/Sidebar";
 
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -29,11 +32,22 @@ function App() {
     // eslint-disable-next-line
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    dispatch(loginFail(""));
+    navigate("/login");
+  };
+
   return (
     <div className="flex">
       <Sidebar />
       <div>
-        <h1>Hello World!</h1>
+        <button
+          className="p-1 rounded-md bg-blue-500 m-5"
+          onClick={() => logout()}
+        >
+          Logout
+        </button>
       </div>
     </div>
   );
