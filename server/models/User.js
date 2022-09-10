@@ -14,6 +14,9 @@ const userSchema = new Schema(
       type: String,
       default: [],
     },
+    month: String,
+    day: Number,
+    year: String,
   },
   { timestamps: true, typeKey: "$type" }
 );

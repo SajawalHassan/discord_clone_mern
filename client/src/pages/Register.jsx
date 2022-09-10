@@ -1,57 +1,218 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import InputField from "../components/InputField";
+import TextField from "@mui/material/TextField";
+import discordLogo from "../images/discord_logo.png";
 import axios from "../api/axios";
 
-const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import {
+  Checkbox,
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+} from "@mui/material";
+
+import { Link, useNavigate } from "react-router-dom";
+import { ReactComponent as Background } from "../images/authBg.svg";
+import Loader from "../components/Loader";
+
+function Register() {
+  const [email, setEmail] = useState("sajawalhassan.1feb@gmail.com");
+  const [username, setUsername] = useState("Sajawal Hassan");
+  const [password, setPassword] = useState("123456789");
+  const [month, setMonth] = useState("January");
+  const [day, setDay] = useState(1);
+  const [year, setYear] = useState("2000");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleOnClick = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     try {
-      const { data } = await axios.post("/auth/register", {
+      await axios.post("/auth/register", {
         username,
         email,
         password,
+        month,
+        day,
+        year,
       });
 
-      console.log(data);
+      setIsLoading(false);
+      navigate("/login");
     } catch (error) {
-      console.log(error.response.message);
+      setIsLoading(false);
+      console.log(error.response.data);
     }
   };
 
   return (
-    <form>
-      <input
-        type="text"
-        name="name"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+    <div className="h-[100vh] overflow-hidden sm:auth-bg">
+      <div className="hidden sm:block sm:h-screen">
+        <Background />
+      </div>
+      <form
+        className="bg-[#36393F] h-screen w-screen flex flex-col px-3 py-6 sm:fixed sm:inset-0 sm:h-[40rem] sm:w-[30rem] sm:m-auto sm:rounded-md"
+        onSubmit={(e) => handleOnClick(e)}
+      >
+        <div className="flex items-center space-x-2 justify-center mb-6">
+          <img src={discordLogo} alt="Discord logo" className="h-10" />
+          <h1 className="text-white text-2xl font-extrabold mt-1">Discord</h1>
+        </div>
 
-      <button type="submit" onClick={(e) => handleOnClick(e)}>
-        Register
-      </button>
-    </form>
+        <div className="mt-4 w-full space-y-5 flex flex-col justify-center h-[80%]">
+          <h1 className="text-white text-2xl font-extrabold text-center -mt-3">
+            Create a new account
+          </h1>
+          <InputField
+            maxLength={255}
+            minLength={3}
+            type="email"
+            label="Email"
+            value={email}
+            setValue={setEmail}
+          />
+          <InputField
+            maxLength={255}
+            minLength={3}
+            type="text"
+            label="Username"
+            value={username}
+            setValue={setUsername}
+          />
+          <InputField
+            maxLength={255}
+            minLength={8}
+            type="password"
+            label="Password"
+            value={password}
+            setValue={setPassword}
+          />
+          <div className="mt-7">
+            <div className="grid grid-cols-3 space-x-2">
+              <div>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Month</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={month}
+                    label="Age"
+                    onChange={(e) => setMonth(e.target.value)}
+                    required
+                  >
+                    <MenuItem value="January">January</MenuItem>
+                    <MenuItem value="Febuary">Febuary</MenuItem>
+                    <MenuItem value="March">March</MenuItem>
+                    <MenuItem value="April">April</MenuItem>
+                    <MenuItem value="May">May</MenuItem>
+                    <MenuItem value="June">June</MenuItem>
+                    <MenuItem value="July">July</MenuItem>
+                    <MenuItem value="August">August</MenuItem>
+                    <MenuItem value="Sepember">Sepember</MenuItem>
+                    <MenuItem value="October">October</MenuItem>
+                    <MenuItem value="November">November</MenuItem>
+                    <MenuItem value="December">December</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <div>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Day</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={day}
+                    label="Age"
+                    onChange={(e) => setDay(e.target.value)}
+                    required
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
+                    <MenuItem value={7}>7</MenuItem>
+                    <MenuItem value={8}>8</MenuItem>
+                    <MenuItem value={9}>9</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={11}>11</MenuItem>
+                    <MenuItem value={12}>12</MenuItem>
+                    <MenuItem value={13}>13</MenuItem>
+                    <MenuItem value={14}>14</MenuItem>
+                    <MenuItem value={15}>15</MenuItem>
+                    <MenuItem value={16}>16</MenuItem>
+                    <MenuItem value={17}>17</MenuItem>
+                    <MenuItem value={18}>18</MenuItem>
+                    <MenuItem value={19}>19</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={21}>21</MenuItem>
+                    <MenuItem value={22}>22</MenuItem>
+                    <MenuItem value={23}>23</MenuItem>
+                    <MenuItem value={24}>24</MenuItem>
+                    <MenuItem value={25}>25</MenuItem>
+                    <MenuItem value={26}>26</MenuItem>
+                    <MenuItem value={27}>27</MenuItem>
+                    <MenuItem value={28}>28</MenuItem>
+                    <MenuItem value={29}>29</MenuItem>
+                    <MenuItem value={30}>30</MenuItem>
+                    <MenuItem value={31}>31</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+              <TextField
+                id="outlined-basic-year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                label="Year"
+                variant="outlined"
+                type="number"
+                inputProps={{
+                  max: new Date().getFullYear(),
+                  min: new Date().getFullYear() - 200,
+                }}
+                required
+              />
+            </div>
+            <div className="flex mt-3">
+              <Checkbox className="-mt-3" />
+              <p className="text-[#8B8D91] text-[11px]">
+                (Optional) It's okay to send me emails with Discord updates,
+                tips, and special offers.
+              </p>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 rounded-sm py-2 w-full mt-4 text-white font-bold hover:bg-blue-600 transition-colors duration-300 flex justify-center"
+          >
+            {isLoading ? <Loader /> : "Continue"}
+          </button>
+          <Link
+            to="/login"
+            className="text-left text-blue-500 hover:underline mt-2 text-sm"
+          >
+            Already have an account?
+          </Link>
+          <p className="text-xs text-zinc-400">
+            By registering, you agree to Discord's{" "}
+            <span className="text-blue-500 hover:underline">
+              Terms of Service
+            </span>{" "}
+            and{" "}
+            <span className="text-blue-500 hover:underline">
+              Privacy Policy
+            </span>
+            .
+          </p>
+        </div>
+      </form>
+    </div>
   );
-};
+}
 
 export default Register;
