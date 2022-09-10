@@ -65,7 +65,3 @@ module.exports.login = async (req, res) => {
     console.log({ error: error.message });
   }
 };
-
-module.exports.protected = (req, res) => {
-  res.json({ user: req.user });
-};

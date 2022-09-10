@@ -1,16 +1,13 @@
 import "./App.css";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "./features/loginSlice";
 import { axiosAuth } from "./api/axios";
 import { setUser } from "./features/userSlice";
-import { useNavigate } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -29,19 +26,15 @@ function App() {
     } else {
       dispatch(loginFail(""));
     }
-  }, [dispatch]);
-
-  const logout = () => {
-    localStorage.removeItem("accessToken");
-    dispatch(loginFail(""));
-    navigate("/login");
-  };
+    // eslint-disable-next-line
+  }, []);
 
   return (
-    <div className="flex space-x-3">
-      <h1>{user?.username}</h1>
-      <h1>{user?.email}</h1>
-      <button onClick={() => logout()}>Logout</button>
+    <div className="flex">
+      <Sidebar />
+      <div>
+        <h1>Hello World!</h1>
+      </div>
     </div>
   );
 }

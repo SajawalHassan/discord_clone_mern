@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { store } from "./app/store";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Sidebar from "./components/Sidebar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
