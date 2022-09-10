@@ -16,15 +16,14 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isLoading, error } = useSelector((state) => state.login);
+  const { isLoading, error, isAuth } = useSelector((state) => state.login);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    if (isAuth) {
       navigate("/");
     }
     dispatch(loginFail(""));
-  }, []);
+  }, [dispatch, isAuth, navigate]);
 
   const handleOnClick = async (e) => {
     e.preventDefault();

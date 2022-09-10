@@ -4,11 +4,12 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./pages/Register";
-import { Provider } from "react-redux";
 import Login from "./pages/Login";
 
+import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { store } from "./app/store";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<App />} />
+          </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>

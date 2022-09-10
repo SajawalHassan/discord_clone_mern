@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";
 import Loader from "../components/Loader";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -27,13 +28,13 @@ function Register() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { isAuth } = useSelector((state) => state.login);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
+    if (isAuth) {
       navigate("/");
     }
-  }, []);
+  }, [isAuth, navigate]);
 
   const handleOnClick = async (e) => {
     e.preventDefault();
