@@ -1,9 +1,24 @@
 import React from "react";
 
-const TextField = ({ type, value, setValue, label, minLength, maxLength }) => {
+const TextField = ({
+  type,
+  value,
+  setValue,
+  label,
+  minLength,
+  maxLength,
+  loginErr,
+}) => {
   return (
     <div className="w-full">
-      <p className="mb-1 font-bold uppercase text-[#8B8D91] text-sm">{label}</p>
+      <div className="flex items-center mb-1">
+        <p className="font-bold uppercase text-[#8B8D91] text-sm">{label}</p>
+        {loginErr && (
+          <p className="font-bold text-red-500 text-xs ml-1">
+            - Login or password is invalid!
+          </p>
+        )}
+      </div>
       <input
         type={type}
         value={value}

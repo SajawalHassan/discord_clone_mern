@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./pages/Register";
 import { Provider } from "react-redux";
+import Login from "./pages/Login";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { store } from "./app/store";
@@ -17,6 +18,7 @@ root.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </Provider>
