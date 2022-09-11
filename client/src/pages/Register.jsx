@@ -14,7 +14,6 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";
-import Loader from "../components/Loader";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -56,7 +55,6 @@ function Register() {
         month,
         day,
         year,
-        // profilePic: "",
       });
 
       dispatch(registerSuccess());
@@ -86,6 +84,7 @@ function Register() {
           </h1>
           <div className="space-y-5">
             <InputField
+              inputClassName="bg-[#202225] text-white"
               error={error ? true : false}
               errorMsg={error}
               maxLength={255}
@@ -96,6 +95,7 @@ function Register() {
               setValue={setEmail}
             />
             <InputField
+              inputClassName="bg-[#202225] text-white"
               error={false}
               maxLength={255}
               minLength={3}
@@ -105,6 +105,7 @@ function Register() {
               setValue={setUsername}
             />
             <InputField
+              inputClassName="bg-[#202225] text-white"
               error={false}
               maxLength={255}
               minLength={8}
@@ -117,13 +118,14 @@ function Register() {
               <div className="grid grid-cols-3 space-x-2">
                 <div>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Month</InputLabel>
+                    <InputLabel sx={{ color: "white" }}>Month</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={month}
                       label="Age"
                       onChange={(e) => setMonth(e.target.value)}
+                      sx={{ color: "white" }}
                       required
                     >
                       <MenuItem value="January">January</MenuItem>
@@ -143,8 +145,14 @@ function Register() {
                 </div>
                 <div>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Day</InputLabel>
+                    <InputLabel
+                      id="demo-simple-select-label"
+                      sx={{ color: "white" }}
+                    >
+                      Day
+                    </InputLabel>
                     <Select
+                      sx={{ color: "white" }}
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={day}
@@ -191,11 +199,15 @@ function Register() {
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
                   label="Year"
+                  InputLabelProps={{
+                    className: "text-white",
+                  }}
                   variant="outlined"
                   type="number"
                   inputProps={{
                     max: new Date().getFullYear(),
                     min: new Date().getFullYear() - 200,
+                    className: "text-white",
                   }}
                   required
                 />
@@ -209,7 +221,11 @@ function Register() {
               </p>
             </div>
           </div>
-          <CreateButton text="Continue" isLoading={null} className="mt-4" />
+          <CreateButton
+            text="Continue"
+            isLoading={isLoading}
+            className="mt-4"
+          />
           <Link to="/login" className="text-link text-xs mt-1">
             Already have an account?
           </Link>

@@ -8,7 +8,7 @@ import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 
 import { useDispatch } from "react-redux";
 import { setModalState } from "../features/serverSlice";
-import CreateServer from "../models/CreateServer";
+import CreateServer from "../modals/CreateServer";
 
 const Sidebar = () => {
   const dispatch = useDispatch((state) => state.server);

@@ -1,10 +1,12 @@
 const Category = require("../models/Category");
 const Channel = require("../models/Channel");
 const Server = require("../models/Server");
+const User = require("../models/User");
 const { serverCreationRegistration } = require("../utils/validation");
 
 module.exports.createServer = async (req, res) => {
   const { title, banner, icon, description } = req.body;
+  const user = await User.findById(req.user._id);
 
   // Validating info
   const { error } = serverCreationRegistration(req.body);
@@ -12,11 +14,13 @@ module.exports.createServer = async (req, res) => {
 
   const newServer = new Server({
     title,
+    description,
     banner,
     icon,
-    description,
     ownerId: req.user._id,
   });
+
+  await user.updateOne({ $push: { createdServers: newServer._id } });
 
   const newTextCategory = new Category({
     title: "Text Channels",

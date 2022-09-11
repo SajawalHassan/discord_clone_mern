@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import InputField from "../components/InputField";
 import discordLogo from "../images/discord_logo.png";
-import axios from "../api/axios";
-import Loader from "../components/Loader";
+import axios, { axiosAuth } from "../api/axios";
 
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { loginFail, loginSuccess, setIsLoading } from "../features/loginSlice";
 import CreateButton from "../components/CreateButton";
+import { setUser } from "../features/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,21 +23,34 @@ const Login = () => {
     if (isAuth) {
       navigate("/");
     }
-  }, []);
+  }, [isAuth, navigate]);
 
   const handleOnClick = async (e) => {
     e.preventDefault();
 
     dispatch(setIsLoading(true));
+    let accessToken = "";
     try {
       const { data } = await axios.post("/auth/login", { email, password });
 
       localStorage.setItem("accessToken", data.accessToken);
+      accessToken = data.accessToken;
       dispatch(loginSuccess());
-      navigate("/");
     } catch (error) {
       dispatch(loginFail(error.response.data));
     }
+    try {
+      const { data } = await axios.get("/users/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      dispatch(setUser(data));
+    } catch (error) {
+      console.log(error.response.data);
+    }
+    navigate("/");
   };
   return (
     <div className="h-[100vh] overflow-hidden sm:auth-bg">
@@ -62,6 +75,7 @@ const Login = () => {
           </p>
           <div className="space-y-5">
             <InputField
+              inputClassName="bg-[#202225] text-white"
               type="email"
               label="Email"
               value={email}
@@ -70,6 +84,7 @@ const Login = () => {
               errorMsg={error}
             />
             <InputField
+              inputClassName="bg-[#202225] text-white"
               type="password"
               label="Password"
               value={password}
@@ -79,7 +94,7 @@ const Login = () => {
             />
           </div>
           <p className="text-xs text-link mt-1">Forgot your password?</p>
-          <CreateButton text="Login" isLoading={null} className="mt-4" />
+          <CreateButton text="Login" isLoading={isLoading} className="mt-4" />
           <Link to="/register" className="text-link text-xs mt-1">
             Don't have an account?
           </Link>

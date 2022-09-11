@@ -29,12 +29,12 @@ function App() {
     } else {
       dispatch(loginFail(""));
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
     dispatch(loginFail(""));
+    dispatch(setUser({}));
     navigate("/login");
   };
 
