@@ -3,17 +3,17 @@ const { Schema, model } = mongoose;
 
 const serverSchema = new Schema(
   {
-    title: String,
-    banner: String,
-    icon: String,
-    ownerId: String,
-    categories: Array,
-    channels: Array,
-    members: Array,
-    banedUsers: Array,
-    description: Array,
+    title: { type: String, required: true },
+    description: { type: String, default: "" },
+    banner: { type: String, default: "" },
+    icon: { type: String, default: "" },
+    ownerId: { type: String, required: true },
+    categories: { type: Array, default: [] },
+    channels: { type: Array, default: [] },
+    members: { type: Array, default: [] },
+    banedUsers: { type: Array, default: [] },
   },
-  { timestamps: true, typeKey: "$type" }
+  { timestamps: true }
 );
 
-module.exports = model("Servers", serverSchemas);
+module.exports = model("Servers", serverSchema);

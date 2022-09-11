@@ -17,3 +17,13 @@ Content-Type: application/json
     "password": "123456789"
 }
 
+###
+
+POST http://localhost:5000/api/servers/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJvYiIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImpvaW5lZFNlcnZlcnMiOltdLCJjcmVhdGVkU2VydmVycyI6W10sIl9pZCI6IjYzMWNhYjczNWNjOTlmZmRkZDlmMmZhMyIsImlhdCI6MTY2Mjg3MDA4MH0.VOVCe9qpSjFHR60sECsSb8Zb18KfB2Zs11R8pX3_vg4
+
+{
+    "title": "This is my server!",
+    "description": "This is a description!"
+}

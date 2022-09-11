@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { loginFail, loginSuccess, setIsLoading } from "../features/loginSlice";
+import CreateButton from "../components/CreateButton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -78,12 +79,7 @@ const Login = () => {
             />
           </div>
           <p className="text-xs text-link mt-1">Forgot your password?</p>
-          <button
-            type="submit"
-            className="bg-blue-500 rounded-sm py-2 w-full mt-4 text-white font-bold hover:bg-blue-600 transition-colors duration-300 flex justify-center"
-          >
-            {isLoading ? <Loader /> : "Continue"}
-          </button>
+          <CreateButton text="Login" isLoading={null} className="mt-4" />
           <Link to="/register" className="text-link text-xs mt-1">
             Don't have an account?
           </Link>

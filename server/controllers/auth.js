@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const { userRegistrationValidation } = require("../utils/validation");
 
 module.exports.register = async (req, res) => {
-  let { username, email, password } = req.body;
+  let { username, email, password, month, day, year, profilePic } = req.body;
 
   // Validating info
   const { error } = userRegistrationValidation(req.body);
@@ -25,6 +25,10 @@ module.exports.register = async (req, res) => {
     username,
     email,
     password,
+    month,
+    day,
+    year,
+    profilePic,
   });
 
   try {

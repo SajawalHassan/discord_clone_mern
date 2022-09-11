@@ -22,6 +22,7 @@ import {
   registerSuccess,
   setIsLoading,
 } from "../features/registerSlice";
+import CreateButton from "../components/CreateButton";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -55,6 +56,7 @@ function Register() {
         month,
         day,
         year,
+        // profilePic: "",
       });
 
       dispatch(registerSuccess());
@@ -207,12 +209,7 @@ function Register() {
               </p>
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 rounded-sm py-2 w-full mt-4 text-white font-bold hover:bg-blue-600 transition-colors duration-300 flex justify-center"
-          >
-            {isLoading ? <Loader /> : "Continue"}
-          </button>
+          <CreateButton text="Continue" isLoading={null} className="mt-4" />
           <Link to="/login" className="text-link text-xs mt-1">
             Already have an account?
           </Link>
