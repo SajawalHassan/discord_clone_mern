@@ -60,3 +60,13 @@ module.exports.createServer = async (req, res) => {
     newVoiceChannel,
   });
 };
+
+module.exports.getCreatedServers = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const servers = await Server.find({ _id: user.createdServers });
+    res.json(servers);
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};

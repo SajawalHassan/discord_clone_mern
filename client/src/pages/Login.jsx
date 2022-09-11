@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InputField from "../components/InputField";
 import discordLogo from "../images/discord_logo.png";
-import axios, { axiosAuth } from "../api/axios";
+import axios from "../api/axios";
 
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";

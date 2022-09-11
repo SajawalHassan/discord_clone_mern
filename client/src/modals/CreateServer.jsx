@@ -106,6 +106,7 @@ const CreateServer = () => {
                   className="hidden"
                   ref={filePickerForBanner}
                   onChange={(e) => handleChange(e, setBanner)}
+                  accept="image/png, image/jpeg"
                 />
               </div>
             )}
@@ -132,6 +133,7 @@ const CreateServer = () => {
                   className="hidden"
                   ref={filePickerForIcon}
                   onChange={(e) => handleChange(e, setIcon)}
+                  accept="image/png, image/jpeg"
                 />
               </div>
             )}
