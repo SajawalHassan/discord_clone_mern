@@ -70,3 +70,17 @@ module.exports.getCreatedServers = async (req, res) => {
     res.json({ error: error.message });
   }
 };
+
+module.exports.getServerById = async (req, res) => {
+  try {
+    const server = await Server.findyId(req.params.id);
+    const categories = await Category.find({ serverId: server._id });
+    const channels = await Channel.find({
+      $where: { categoryId: categories._id },
+    });
+
+    res.json({ server, categories, channels });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+};

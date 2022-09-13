@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setModalState } from "../features/serverSlice";
 import CreateServer from "../modals/CreateServer";
 import { axiosAuth } from "../api/axios";
+import ServerOption from "./ServerOption";
 
 const Sidebar = () => {
   const [createdServers, setCreatedServers] = useState([]);
@@ -38,8 +39,8 @@ const Sidebar = () => {
         hoverBg="hover:bg-[#5865F2]"
       />
       <Seperator />
-      {createdServers?.map(({ icon, title, _id }) => (
-        <SidebarOption image={icon} text={title} key={_id} />
+      {createdServers?.map(({ icon, title, _id, ownerId }) => (
+        <ServerOption image={icon} text={title} key={_id} ownerId={ownerId} />
       ))}
       <SidebarOption
         Icon={AddOutlinedIcon}

@@ -5,12 +5,12 @@ const SidebarOption = ({
   Icon,
   text,
   hoverBg = image ? "" : "hover:bg-[#3BA55D]",
-  onClick = null,
+  onClick,
 }) => {
   return (
     <div
       className={`h-12 w-12 flex items-center justify-center rounded-3xl bg-[#323236] transition-all hover:rounded-xl duration-200 ease-linear ${hoverBg} cursor-pointer relative group`}
-      onClick={() => onClick()}
+      onClick={(e) => onClick(e)}
     >
       {Icon && <Icon className="text-[2rem] text-white" />}
       {image && (
