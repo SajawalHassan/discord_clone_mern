@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InputField from "../components/InputField";
+import InputField from "../components/Utils/InputField";
 import discordLogo from "../images/discord_logo.png";
 import axios from "../api/axios";
 
@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Background } from "../images/authBg.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { loginFail, loginSuccess, setIsLoading } from "../features/loginSlice";
-import CreateButton from "../components/CreateButton";
+import CreateButton from "../components/Utils/CreateButton";
 import { setUser } from "../features/userSlice";
 
 const Login = () => {

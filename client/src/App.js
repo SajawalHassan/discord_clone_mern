@@ -1,12 +1,12 @@
 import "./App.css";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "./features/loginSlice";
-import { axiosAuth } from "./api/axios";
 import { setUser } from "./features/userSlice";
 import { useNavigate } from "react-router-dom";
 
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/Sidebar/Sidebar";
+import { axiosAuth } from "./api/axios";
+import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,14 +20,12 @@ function App() {
           const { data } = await axiosAuth.get("/users/me");
 
           dispatch(setUser(data));
+          dispatch(loginSuccess());
         } catch (error) {
-          console.log(error.response.data);
+          return error.response.data;
         }
       };
       getUser();
-      dispatch(loginSuccess());
-    } else {
-      dispatch(loginFail(""));
     }
   }, [dispatch]);
 

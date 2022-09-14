@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputField from "../components/InputField";
+import InputField from "../components/Utils/InputField";
 import TextField from "@mui/material/TextField";
 import discordLogo from "../images/discord_logo.png";
 import axios from "../api/axios";
@@ -21,7 +21,7 @@ import {
   registerSuccess,
   setIsLoading,
 } from "../features/registerSlice";
-import CreateButton from "../components/CreateButton";
+import CreateButton from "../components/Utils/CreateButton";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -61,6 +61,7 @@ function Register() {
       navigate("/login");
     } catch (error) {
       dispatch(registerFail(error.response.data));
+      console.log(error.response.data);
     }
   };
 

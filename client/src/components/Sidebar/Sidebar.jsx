@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import SidebarOption from "./SidebarOption";
-import discordLogo from "../images/discord_logo.png";
-import Seperator from "./Seperator";
+import discordLogo from "../../images/discord_logo.png";
+import Seperator from "../Utils/Seperator";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 
 import { useDispatch } from "react-redux";
-import { setModalState } from "../features/serverSlice";
-import CreateServer from "../modals/CreateServer";
-import { axiosAuth } from "../api/axios";
+import { setModalState } from "../../features/serverSlice";
+import CreateServer from "../../modals/CreateServer";
+import { axiosAuth } from "../../api/axios";
 import ServerOption from "./ServerOption";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [createdServers, setCreatedServers] = useState([]);
@@ -39,8 +40,10 @@ const Sidebar = () => {
         hoverBg="hover:bg-[#5865F2]"
       />
       <Seperator />
-      {createdServers?.map(({ icon, title, _id, ownerId }) => (
-        <ServerOption image={icon} text={title} key={_id} ownerId={ownerId} />
+      {createdServers?.map(({ icon, title, _id, ownerId, channels }) => (
+        <Link to={`/channel/${_id}/${channels[0]}`} key={_id}>
+          <ServerOption image={icon} text={title} key={_id} ownerId={ownerId} />
+        </Link>
       ))}
       <SidebarOption
         Icon={AddOutlinedIcon}

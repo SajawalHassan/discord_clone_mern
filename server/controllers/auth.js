@@ -21,6 +21,21 @@ module.exports.register = async (req, res) => {
   // Hashing password
   password = await bcrypt.hash(password, 10);
 
+  // Creating user tag
+  const makeId = async (length) => {
+    var result = "";
+    var characters = "1234567890";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    const users = await User.find();
+    if (users.userTag === result) makeId(4);
+    return result;
+  };
+
+  const result = await makeId(4);
+
   const newUser = new User({
     username,
     email,
@@ -29,6 +44,7 @@ module.exports.register = async (req, res) => {
     day,
     year,
     profilePic,
+    userTag: result,
   });
 
   try {

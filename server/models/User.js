@@ -12,6 +12,7 @@ const userSchema = new Schema(
     day: { type: Number, required: true },
     year: { type: String, required: true },
     profilePic: { type: String, default: "" },
+    userTag: { type: String, required: true },
   },
   { timestamps: true }
 );

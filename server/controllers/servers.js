@@ -29,6 +29,7 @@ module.exports.createServer = async (req, res) => {
 
   const newTextChannel = new Channel({
     title: "General",
+    type: "text",
     categoryId: newTextCategory._id,
   });
 
@@ -39,8 +40,12 @@ module.exports.createServer = async (req, res) => {
 
   const newVoiceChannel = new Channel({
     title: "General",
+    type: "voice",
     categoryId: newVoiceCategory._id,
   });
+
+  newServer.categories.push(newTextCategory._id, newVoiceCategory._id);
+  newServer.channels.push(newTextChannel._id, newVoiceChannel._id);
 
   try {
     await newServer.save();
@@ -73,10 +78,10 @@ module.exports.getCreatedServers = async (req, res) => {
 
 module.exports.getServerById = async (req, res) => {
   try {
-    const server = await Server.findyId(req.params.id);
+    const server = await Server.findById(req.params.id);
     const categories = await Category.find({ serverId: server._id });
     const channels = await Channel.find({
-      $where: { categoryId: categories._id },
+      categoryId: categories.map(({ _id }) => _id),
     });
 
     res.json({ server, categories, channels });

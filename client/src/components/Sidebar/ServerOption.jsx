@@ -1,16 +1,14 @@
 import React, { useRef, useState } from "react";
-import useOutsideAlerter from "../hooks/useOutsideAlerter";
-import MenuOption from "./MenuOption";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
+import MenuOption from "../Menu/MenuOption";
 import ArrowRightOutlined from "@mui/icons-material/ArrowRightOutlined";
-import Seperator from "./Seperator";
+import Seperator from "../Utils/Seperator";
 import { useSelector } from "react-redux";
 
 const ServerOption = ({ image, text, ownerId }) => {
   const [menu, setMenu] = useState(false);
 
   const { user } = useSelector((state) => state.user);
-
-  //   console.log({ _id, ownerId });
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setMenu);

@@ -5,11 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import ProtectedRoute from "./components/Utils/ProtectedRoute";
 
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { store } from "./app/store";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Channel from "./pages/Channel";
+import { getUser } from "./middleware/getUser";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,8 +19,9 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute />} onEnter={getUser()}>
             <Route path="/" element={<App />} />
+            <Route path="/channel/:serverId/:channelId" element={<Channel />} />
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

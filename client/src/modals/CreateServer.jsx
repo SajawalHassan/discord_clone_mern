@@ -11,8 +11,8 @@ import {
   setIsLoading,
   setModalState,
 } from "../features/serverSlice";
-import CreateButton from "../components/CreateButton";
-import InputField from "../components/InputField";
+import CreateButton from "../components/Utils/CreateButton";
+import InputField from "../components/Utils/InputField";
 import { axiosAuth } from "../api/axios";
 
 const CreateServer = () => {
@@ -47,6 +47,7 @@ const CreateServer = () => {
       setIcon("");
       setTitle("");
       setDescription("");
+      window.location.reload();
     } catch (error) {
       dispatch(serverFail(error.response.data));
     }

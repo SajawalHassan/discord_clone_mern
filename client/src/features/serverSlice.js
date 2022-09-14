@@ -4,6 +4,7 @@ const initialState = {
   isLoading: false,
   error: "",
   modalIsOpen: false,
+  serverSidebarIsOpen: false,
 };
 
 const serverSlice = createSlice({
@@ -15,6 +16,9 @@ const serverSlice = createSlice({
     },
     setModalState: (state, { payload }) => {
       state.modalIsOpen = payload;
+    },
+    setServerSidebarState: (state, { payload }) => {
+      state.serverSidebarIsOpen = payload;
     },
     serverSuccess: (state) => {
       state.isLoading = false;
@@ -28,7 +32,12 @@ const serverSlice = createSlice({
   },
 });
 
-export const { serverFail, serverSuccess, setIsLoading, setModalState } =
-  serverSlice.actions;
+export const {
+  serverFail,
+  serverSuccess,
+  setIsLoading,
+  setModalState,
+  setServerSidebarState,
+} = serverSlice.actions;
 
 export default serverSlice.reducer;
