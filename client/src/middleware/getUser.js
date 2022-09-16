@@ -4,14 +4,18 @@ import { setUser } from "../features/userSlice";
 import { store } from "../app/store";
 
 export const getUser = async () => {
-  try {
-    const { data } = await axiosAuth.get("/users/me");
+  const { user } = store.getState((state) => state.user);
+  console.log(user.user);
+  if (user.user) {
+    try {
+      const { data } = await axiosAuth.get("/users/me");
 
-    store.dispatch(setUser(data));
-    store.dispatch(loginSuccess());
+      store.dispatch(setUser(data));
+      store.dispatch(loginSuccess());
 
-    return data;
-  } catch (error) {
-    return error.response.data;
+      return data;
+    } catch (error) {
+      return error.response.data;
+    }
   }
 };

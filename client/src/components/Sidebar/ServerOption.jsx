@@ -43,7 +43,7 @@ const ServerOption = ({ image, text, ownerId }) => {
               <div className="menu-option group relative">
                 <h1 className="text-sm">Server Settings</h1>
                 <ArrowRightOutlined />
-                <div className="menu left-[12rem] -top-2 hidden group-hover:block absolute">
+                <div className="menu bg-[#25272b] xs:left-[12rem] xs:bg-[#18191C] -left-2 z-50 -top-2 hidden group-hover:block absolute">
                   <MenuOption text="Overview" />
                   <MenuOption text="Members" />
                 </div>

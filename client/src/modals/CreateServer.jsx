@@ -14,6 +14,7 @@ import {
 import CreateButton from "../components/Utils/CreateButton";
 import InputField from "../components/Utils/InputField";
 import { axiosAuth } from "../api/axios";
+import { handleFileChange } from "../util/handleFileChange";
 
 const CreateServer = () => {
   const { modalIsOpen, error, isLoading } = useSelector(
@@ -50,20 +51,6 @@ const CreateServer = () => {
       window.location.reload();
     } catch (error) {
       dispatch(serverFail(error.response.data));
-    }
-  };
-
-  const handleChange = (e, setValue) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file); // Converting to base 64
-      reader.onload = () => {
-        setValue(reader.result);
-      };
-      reader.onerror = (err) => {
-        console.log(err);
-      };
     }
   };
 
@@ -106,7 +93,7 @@ const CreateServer = () => {
                   type="file"
                   className="hidden"
                   ref={filePickerForBanner}
-                  onChange={(e) => handleChange(e, setBanner)}
+                  onChange={(e) => handleFileChange(e, setBanner)}
                   accept="image/png, image/jpeg"
                 />
               </div>
@@ -133,7 +120,7 @@ const CreateServer = () => {
                   type="file"
                   className="hidden"
                   ref={filePickerForIcon}
-                  onChange={(e) => handleChange(e, setIcon)}
+                  onChange={(e) => handleFileChange(e, setIcon)}
                   accept="image/png, image/jpeg"
                 />
               </div>

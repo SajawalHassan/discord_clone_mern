@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import ArrowLeftOutlined from "@mui/icons-material/ArrowLeftOutlined";
 import SettingsOutlined from "@mui/icons-material/SettingsOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import MicOffOutlined from "@mui/icons-material/MicOffOutlined";
 import HeadsetOutlined from "@mui/icons-material/HeadsetOutlined";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import UserCard from "../User/UserCard";
 import IconWithLabel from "../Utils/IconWithLabel";
+import MenuOption from "../Menu/MenuOption";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setServerSidebarState } from "../../features/serverSlice";
 import { ReactComponent as TextIcon } from "../../images/textIcon.svg";
 import { ReactComponent as VoiceIcon } from "../../images/voiceIcon.svg";
 import { useParams } from "react-router-dom";
+import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 
 const ServerSidebar = ({ server, categories, channels }) => {
+  const [menu, setMenu] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setMenu);
+
   const { channelId } = useParams();
   const { user } = useSelector((state) => state.user);
-
   const { serverSidebarIsOpen } = useSelector((state) => state.server);
 
   const dispatch = useDispatch();
@@ -25,9 +32,24 @@ const ServerSidebar = ({ server, categories, channels }) => {
   return (
     serverSidebarIsOpen && (
       <div className="fixed inset-0 m-auto bg-[#2F3136]">
-        <div className="px-2 py-4 flex items-center justify-between hover:bg-[#3C3F45] transition-colors duration-200 cursor-pointer">
+        <div
+          className="px-2 py-4 flex items-center justify-between hover:bg-[#3C3F45] transition-colors duration-200 cursor-pointer relative"
+          onClick={() => setMenu(!menu)}
+        >
           <h1 className="text-white text-xl font-bold">{server?.title}</h1>
           <ArrowDropDownOutlinedIcon className="text-3xl text-white" />
+        </div>
+        <div
+          className={`absolute inset-x-0 mx-auto top-[4.5rem] flex justify-center ${
+            menu ? `scale-100` : `scale-0`
+          } transition-all duration-100`}
+          ref={wrapperRef}
+        >
+          <div className="menu mx-auto w-[15em]">
+            <MenuOption text="Server Settings" Icon={SettingsOutlined} />
+            <MenuOption text="Create Category" Icon={AddCircleIcon} />
+            <MenuOption text="Create Channel" Icon={CreateNewFolderIcon} />
+          </div>
         </div>
 
         <div className="mt-5 ml-1">
@@ -78,8 +100,8 @@ const ServerSidebar = ({ server, categories, channels }) => {
           className="text-5xl text-white absolute bottom-20 right-5 cursor-pointer p-2 rounded-full hover:bg-[#3C3F45] transition-colors duration-200"
         />
 
-        <div className="absolute bottom-0 px-4 py-4 bg-[#292B2F] w-full h-16 flex items-center justify-between">
-          <UserCard />
+        <div className="absolute bottom-0 px-4 py-2 bg-[#292B2F] w-full flex items-center justify-between">
+          <UserCard user={user} />
           <div className="flex items-center space-x-3">
             <MicOffOutlined className="icon-btn" />
             <HeadsetOutlined className="icon-btn" />

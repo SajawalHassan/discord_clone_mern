@@ -13,6 +13,7 @@ const userSchema = new Schema(
     year: { type: String, required: true },
     profilePic: { type: String, default: "" },
     userTag: { type: String, required: true },
+    banner: { type: String, default: "" },
   },
   { timestamps: true }
 );

@@ -12,20 +12,25 @@ import CreateServer from "../../modals/CreateServer";
 import { axiosAuth } from "../../api/axios";
 import ServerOption from "./ServerOption";
 import { Link } from "react-router-dom";
+import Loader from "../Utils/Loader";
 
 const Sidebar = () => {
   const [createdServers, setCreatedServers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch((state) => state.server);
 
   useEffect(() => {
+    setIsLoading(true);
     const getServers = async () => {
       try {
         const { data } = await axiosAuth.get("/servers/get/created");
 
         setCreatedServers(data);
+        setIsLoading(false);
       } catch (error) {
-        console.log(error.response.data);
+        console.log(error);
+        setIsLoading(false);
       }
     };
     getServers();
@@ -40,11 +45,21 @@ const Sidebar = () => {
         hoverBg="hover:bg-[#5865F2]"
       />
       <Seperator />
-      {createdServers?.map(({ icon, title, _id, ownerId, channels }) => (
-        <Link to={`/channel/${_id}/${channels[0]}`} key={_id}>
-          <ServerOption image={icon} text={title} key={_id} ownerId={ownerId} />
-        </Link>
-      ))}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        createdServers?.map(({ icon, title, _id, ownerId, channels }) => (
+          <Link to={`/channel/${_id}/${channels[0]}`} key={_id}>
+            <ServerOption
+              image={icon}
+              text={title}
+              key={_id}
+              ownerId={ownerId}
+            />
+          </Link>
+        ))
+      )}
+      {/* )} */}
       <SidebarOption
         Icon={AddOutlinedIcon}
         text="Add a Server"

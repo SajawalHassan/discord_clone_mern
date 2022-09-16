@@ -14,6 +14,7 @@ module.exports.userRegistrationValidation = (data) => {
       .min(currentYear - 200)
       .max(currentYear)
       .required(),
+    banner: joi.string().allow(""),
   });
 
   return schema.validate(data);
