@@ -9,36 +9,27 @@ import Loader from "../components/Utils/Loader";
 const Server = () => {
   const [server, setServer] = useState({});
   const [categories, setCategories] = useState([]);
-  const [channels, setChannels] = useState({});
+  const [channels, setChannels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { serverId } = useParams();
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
-    isMounted && setIsLoading(true);
+    setIsLoading(true);
     const getServer = async () => {
       try {
-        const { data } = await axiosAuth.get(`/servers/get/${serverId}`, {
-          signal: controller.signal,
-        });
+        const { data } = await axiosAuth.get(`/servers/get/${serverId}`);
 
-        isMounted && setServer(data.server);
-        isMounted && setCategories(data.categories);
-        isMounted && setChannels(data.channels);
-        isMounted && setIsLoading(false);
-      } catch (error) {}
+        setServer(data.server);
+        setCategories(data.categories);
+        setChannels(data.channels);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
     };
 
     getServer();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-      setIsLoading(false);
-    };
   }, [serverId]);
 
   if (isLoading) {
@@ -52,16 +43,18 @@ const Server = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="w-full">
-        <ChannelHeader
-          server={server}
-          categories={categories}
-          channels={channels}
-        />
+      <div className="w-full flex">
         <ChannelSidebar
           server={server}
           categories={categories}
           channels={channels}
+          isLoading={isLoading}
+        />
+        <ChannelHeader
+          server={server}
+          categories={categories}
+          channels={channels}
+          isLoading={isLoading}
         />
       </div>
     </div>

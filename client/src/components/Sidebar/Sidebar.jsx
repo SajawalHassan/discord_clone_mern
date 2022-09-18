@@ -21,6 +21,7 @@ const Sidebar = () => {
   const dispatch = useDispatch((state) => state.server);
 
   useEffect(() => {
+    if (!createdServers.length === 0) return;
     setIsLoading(true);
     const getServers = async () => {
       try {
@@ -37,7 +38,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className="bg-[#202225] w-[6rem] h-screen sticky top-0 left-0 flex flex-col items-center py-5 space-y-2">
+    <div className="bg-[#202225] w-[6rem] h-screen sticky top-0 left-0 flex flex-col items-center py-5 space-y-2 z-50">
       <CreateServer />
       <SidebarOption
         image={discordLogo}
@@ -59,7 +60,6 @@ const Sidebar = () => {
           </Link>
         ))
       )}
-      {/* )} */}
       <SidebarOption
         Icon={AddOutlinedIcon}
         text="Add a Server"

@@ -5,8 +5,10 @@ import { store } from "../app/store";
 
 export const getUser = async () => {
   const { user } = store.getState((state) => state.user);
-  console.log(user.user);
-  if (user.user) {
+  if (
+    Object.keys(user.user).length === 0 &&
+    Object.getPrototypeOf(user.user) === Object.prototype
+  ) {
     try {
       const { data } = await axiosAuth.get("/users/me");
 
