@@ -12,7 +12,15 @@
   .menu {
     @apply absolute bg-[#18191C] p-2 w-[13rem] flex flex-col items-center rounded-[4px] text-white z-50 space-y-2;
   }
-  .icon-btn {
+  .sidebar-icon-btn {
     @apply text-gray-400 !text-[33px] p-1 rounded-md hover:bg-[#37383a] cursor-pointer;
   }
+  .channel-input-btn {
+    @apply text-[#a1a1a1] hover:text-[#DCDDDE] text-3xl cursor-pointer;
+  }
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
 }

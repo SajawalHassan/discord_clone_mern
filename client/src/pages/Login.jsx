@@ -25,6 +25,10 @@ const Login = () => {
     }
   }, [isAuth, navigate]);
 
+  useEffect(() => {
+    document.title = "Discord | Login";
+  }, []);
+
   const handleOnClick = async (e) => {
     e.preventDefault();
 

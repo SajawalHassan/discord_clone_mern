@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosAuth } from "../api/axios";
 import ChannelHeader from "../components/Channel/ChannelHeader";
+import ChannelMessage from "../components/Channel/ChannelMessage";
 import ChannelSidebar from "../components/Channel/ChannelSidebar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Loader from "../components/Utils/Loader";
@@ -12,7 +13,13 @@ const Server = () => {
   const [channels, setChannels] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { serverId } = useParams();
+  const { serverId, channelId } = useParams();
+
+  const channelTitle = channels
+    ?.filter((channel) => channel._id === channelId)
+    .map(({ title }) => {
+      return title;
+    });
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,9 +39,13 @@ const Server = () => {
     getServer();
   }, [serverId]);
 
+  useEffect(() => {
+    document.title = `Discord | #${channelTitle} | ${server.title}`;
+  }, [channelId, channels, server.title, channelTitle]);
+
   if (isLoading) {
     return (
-      <div className="bg-zinc-800 h-screen w-screen grid place-content-center">
+      <div className="bg-zinc-800 fixed inset-0 z-50 grid place-content-center">
         <Loader />
       </div>
     );
@@ -43,19 +54,29 @@ const Server = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="w-full flex">
-        <ChannelSidebar
-          server={server}
-          categories={categories}
-          channels={channels}
-          isLoading={isLoading}
-        />
-        <ChannelHeader
-          server={server}
-          categories={categories}
-          channels={channels}
-          isLoading={isLoading}
-        />
+      <div className="w-full h-screen flex">
+        <div className="h-full">
+          <ChannelSidebar
+            server={server}
+            categories={categories}
+            channels={channels}
+            isLoading={isLoading}
+          />
+        </div>
+        <div className="w-full h-full flex flex-col">
+          <ChannelHeader
+            server={server}
+            categories={categories}
+            channels={channels}
+            isLoading={isLoading}
+          />
+          <ChannelMessage
+            server={server}
+            categories={categories}
+            channels={channels}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </div>
   );

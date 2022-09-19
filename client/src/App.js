@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { loginFail, loginSuccess } from "./features/loginSlice";
 import { setUser } from "./features/userSlice";
 import { useNavigate } from "react-router-dom";
-
-import Sidebar from "./components/Sidebar/Sidebar";
 import { axiosAuth } from "./api/axios";
 import { useEffect } from "react";
+
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   const dispatch = useDispatch();

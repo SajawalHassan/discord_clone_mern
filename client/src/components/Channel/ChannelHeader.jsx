@@ -30,7 +30,7 @@ const ServerHeader = ({ channels, isLoading }) => {
   }, [channelId, channels]);
 
   return (
-    <div className="bg-[#36393F] flex items-center p-2 h-14 justify-between sm:flex-[0.6] w-full lg:flex-[0.7] xl:flex-[0.8] 2xl:flex-[0.85]">
+    <div className="bg-[#36393F] flex items-center p-2 h-14 justify-between border-b border-[#232527] w-full sticky top-0 z-50">
       <div className="flex items-center space-x-3">
         <ArrowRightOutlined
           onClick={() => dispatch(setServerSidebarState(true))}
@@ -50,7 +50,7 @@ const ServerHeader = ({ channels, isLoading }) => {
       {search && (
         <div className="fixed h-screen w-screen z-50 bg-black bg-opacity-60 m-auto inset-0 grid place-content-center">
           <div
-            className="bg-[#18191C] rounded-md min-w-[20rem] max-w-[40rem] p-2 shadow-lg space-y-2"
+            className="bg-[#212327] rounded-md w-[20rem] md:w-[30rem] p-2 shadow-lg space-y-2"
             ref={wrapperRef}
           >
             <div className="p-1 flex items-center justify-between">

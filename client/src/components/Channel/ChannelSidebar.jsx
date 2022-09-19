@@ -34,12 +34,12 @@ const ServerSidebar = ({ server, categories, channels }) => {
       className={
         serverSidebarIsOpen
           ? `fixed inset-0 z-50 w-screen m-auto bg-[#2F3136]`
-          : `hidden sm:static sm:w-[20rem] sm:bg-[#2F3136] sm:block sm:flex-[0.85] md:flex-[0.4] lg:flex-[0.3] xl:flex-[0.2] 2xl:flex-[0.15]`
+          : `hidden sm:static sm:w-[20rem] sm:bg-[#2F3136] h-full sm:block`
       }
     >
       <div className="relative h-full w-full">
         <div
-          className="px-2 py-4 flex items-center justify-between hover:bg-[#3C3F45] transition-colors duration-200 cursor-pointer relative h-14"
+          className="px-2 py-4 flex items-center justify-between hover:bg-[#3C3F45] transition-colors duration-200 cursor-pointer relative h-14 border-b border-[#232527]"
           onClick={() => setMenu(!menu)}
         >
           <h1 className="text-white text-xl font-bold">{server?.title}</h1>
@@ -111,9 +111,9 @@ const ServerSidebar = ({ server, categories, channels }) => {
             <UserCard user={user} />
           </div>
           <div className="flex items-center space-x-3">
-            <MicOffOutlined className="icon-btn" />
-            <HeadsetOutlined className="icon-btn" />
-            <SettingsOutlined className="icon-btn" />
+            <MicOffOutlined className="sidebar-icon-btn" />
+            <HeadsetOutlined className="sidebar-icon-btn" />
+            <SettingsOutlined className="sidebar-icon-btn" />
           </div>
         </div>
       </div>

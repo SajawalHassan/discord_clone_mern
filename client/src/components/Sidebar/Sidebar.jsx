@@ -1,41 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SidebarOption from "./SidebarOption";
 import discordLogo from "../../images/discord_logo.png";
 import Seperator from "../Utils/Seperator";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-
-import { useDispatch } from "react-redux";
-import { setModalState } from "../../features/serverSlice";
-import CreateServer from "../../modals/CreateServer";
-import { axiosAuth } from "../../api/axios";
-import ServerOption from "./ServerOption";
-import { Link } from "react-router-dom";
 import Loader from "../Utils/Loader";
+import CreateServer from "../../modals/CreateServer";
+import ServerOption from "./ServerOption";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setModalState } from "../../features/serverSlice";
+import { axiosAuth } from "../../api/axios";
+import { Link } from "react-router-dom";
+import { setIsLoading, setServers } from "../../features/sidebarSlice";
 
 const Sidebar = () => {
-  const [createdServers, setCreatedServers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const dispatch = useDispatch((state) => state.server);
+  const dispatch = useDispatch();
+  const { servers, isLoading } = useSelector((state) => state.sidebar);
 
   useEffect(() => {
-    if (!createdServers.length === 0) return;
-    setIsLoading(true);
+    if (servers.length !== 0) return;
+    dispatch(setIsLoading(true));
     const getServers = async () => {
       try {
         const { data } = await axiosAuth.get("/servers/get/created");
 
-        setCreatedServers(data);
-        setIsLoading(false);
+        dispatch(setServers(data));
       } catch (error) {
         console.log(error);
-        setIsLoading(false);
+        dispatch(setIsLoading(false));
       }
     };
     getServers();
-  }, []);
+  }, [dispatch, servers.length]);
 
   return (
     <div className="bg-[#202225] w-[6rem] h-screen sticky top-0 left-0 flex flex-col items-center py-5 space-y-2 z-50">
@@ -49,7 +47,7 @@ const Sidebar = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        createdServers?.map(({ icon, title, _id, ownerId, channels }) => (
+        servers?.map(({ icon, title, _id, ownerId, channels }) => (
           <Link to={`/channel/${_id}/${channels[0]}`} key={_id}>
             <ServerOption
               image={icon}

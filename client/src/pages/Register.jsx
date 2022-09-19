@@ -43,6 +43,10 @@ function Register() {
     }
   }, [isAuth, navigate]);
 
+  useEffect(() => {
+    document.title = "Discord | Register";
+  }, []);
+
   const handleOnClick = async (e) => {
     e.preventDefault();
 
