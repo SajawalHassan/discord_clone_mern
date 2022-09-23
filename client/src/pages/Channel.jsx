@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { axiosAuth } from "../api/axios";
 import ChannelHeader from "../components/Channel/ChannelHeader";
-import ChannelMessage from "../components/Channel/ChannelMessage";
+import ChannelChatRoom from "../components/Channel/ChannelChatRoom";
 import ChannelSidebar from "../components/Channel/ChannelSidebar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Loader from "../components/Utils/Loader";
 
-const Server = () => {
-  const [server, setServer] = useState({});
-  const [categories, setCategories] = useState([]);
-  const [channels, setChannels] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+import { useDispatch, useSelector } from "react-redux";
+import { channelSuccess, setIsLoading } from "../features/channelSlice";
 
+const Server = () => {
+  const { channels, server, isLoading } = useSelector((state) => state.channel);
   const { serverId, channelId } = useParams();
+
+  const dispatch = useDispatch();
 
   const channelTitle = channels
     ?.filter((channel) => channel._id === channelId)
@@ -22,25 +23,25 @@ const Server = () => {
     });
 
   useEffect(() => {
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
     const getServer = async () => {
       try {
         const { data } = await axiosAuth.get(`/servers/get/${serverId}`);
+        const { server, categories, channels } = data;
 
-        setServer(data.server);
-        setCategories(data.categories);
-        setChannels(data.channels);
-        setIsLoading(false);
+        dispatch(channelSuccess({ server, categories, channels }));
       } catch (error) {
         setIsLoading(false);
       }
     };
 
     getServer();
-  }, [serverId]);
+  }, [serverId, dispatch]);
 
   useEffect(() => {
-    document.title = `Discord | #${channelTitle} | ${server.title}`;
+    if (channels && server.title) {
+      document.title = `Discord | #${channelTitle} | ${server?.title}`;
+    }
   }, [channelId, channels, server.title, channelTitle]);
 
   if (isLoading) {
@@ -52,30 +53,15 @@ const Server = () => {
   }
 
   return (
-    <div className="flex">
+    <div className="flex h-full overflow-hidden">
       <Sidebar />
-      <div className="w-full h-screen flex">
+      <div className="w-full flex">
         <div className="h-full">
-          <ChannelSidebar
-            server={server}
-            categories={categories}
-            channels={channels}
-            isLoading={isLoading}
-          />
+          <ChannelSidebar />
         </div>
         <div className="w-full h-full flex flex-col">
-          <ChannelHeader
-            server={server}
-            categories={categories}
-            channels={channels}
-            isLoading={isLoading}
-          />
-          <ChannelMessage
-            server={server}
-            categories={categories}
-            channels={channels}
-            isLoading={isLoading}
-          />
+          <ChannelHeader />
+          <ChannelChatRoom />
         </div>
       </div>
     </div>

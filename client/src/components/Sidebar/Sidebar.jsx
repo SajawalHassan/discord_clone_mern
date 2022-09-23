@@ -36,7 +36,7 @@ const Sidebar = () => {
   }, [dispatch, servers.length]);
 
   return (
-    <div className="bg-[#202225] w-[6rem] h-screen sticky top-0 left-0 flex flex-col items-center py-5 space-y-2 z-50">
+    <div className="bg-[#202225] min-w-[3.5rem] sm:min-w-[5rem] h-screen sticky top-0 left-0 flex flex-col items-center py-5 space-y-2 z-40 hover:z-50">
       <CreateServer />
       <SidebarOption
         image={discordLogo}

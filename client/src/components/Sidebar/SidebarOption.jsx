@@ -9,7 +9,7 @@ const SidebarOption = ({
 }) => {
   return (
     <div
-      className={`h-12 w-12 flex items-center justify-center rounded-3xl bg-[#323236] transition-all hover:rounded-xl duration-200 ease-linear ${hoverBg} cursor-pointer relative group`}
+      className={`h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center rounded-3xl bg-[#323236] transition-all hover:rounded-xl duration-200 ease-linear ${hoverBg} cursor-pointer relative group`}
       onClick={(e) => onClick(e)}
     >
       {Icon && <Icon className="text-[2rem] text-white" />}

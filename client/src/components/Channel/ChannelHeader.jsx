@@ -6,18 +6,19 @@ import SearchMenuOption from "../Menu/SearchMenuOption";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 
 import { ReactComponent as TextIcon } from "../../images/textIcon.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setServerSidebarState } from "../../features/serverSlice";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const ServerHeader = ({ channels, isLoading }) => {
+const ServerHeader = () => {
   const [channelName, setChannelName] = useState("");
   const [search, setSearch] = useState(false);
   const [searchField, setSearchField] = useState("");
 
   const { channelId } = useParams();
+  const { channels, isLoading } = useSelector((state) => state.channel);
 
   const dispatch = useDispatch();
   const wrapperRef = useRef(null);
@@ -30,7 +31,7 @@ const ServerHeader = ({ channels, isLoading }) => {
   }, [channelId, channels]);
 
   return (
-    <div className="bg-[#36393F] flex items-center p-2 h-14 justify-between border-b border-[#232527] w-full sticky top-0 z-50">
+    <div className="bg-[#36393F] flex items-center p-2 h-14 justify-between border-b border-[#232527] w-full sticky top-0 z-40">
       <div className="flex items-center space-x-3">
         <ArrowRightOutlined
           onClick={() => dispatch(setServerSidebarState(true))}

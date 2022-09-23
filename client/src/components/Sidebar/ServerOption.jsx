@@ -21,7 +21,7 @@ const ServerOption = ({ image, text, ownerId }) => {
   return (
     <div>
       <div
-        className="h-12 w-12 flex items-center justify-center rounded-3xl bg-[#323236] transition-all hover:rounded-xl duration-200 ease-linear cursor-pointer relative group"
+        className="h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center rounded-3xl bg-[#323236] transition-all hover:rounded-xl duration-200 ease-linear cursor-pointer relative group"
         onClick={(e) => e.type === "contextmenu" && handleMenu(e)}
         onContextMenu={(e) => e.type === "contextmenu" && handleMenu(e)}
       >

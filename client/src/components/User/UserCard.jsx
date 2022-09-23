@@ -6,8 +6,7 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import { useSelector } from "react-redux";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
 
-const UserCard = ({ user }) => {
-  const [userMenu, setUserMenu] = useState(false);
+const UserCard = ({ user, userMenu, setUserMenu, className }) => {
   const [usernameCopied, setUsernameCopied] = useState(
     "Click to copy username"
   );
@@ -25,7 +24,7 @@ const UserCard = ({ user }) => {
     <div>
       {userMenu && (
         <div
-          className="bg-[#18191C] absolute bottom-20 pb-2 w-[20rem] rounded-md shadow-lg shadow-zinc-800 left-10"
+          className={`bg-[#18191C] pb-2 w-[20rem] rounded-md shadow-lg shadow-zinc-800 z-50 ${className}`}
           ref={wrapperRef}
         >
           {user?.banner ? (
@@ -73,22 +72,6 @@ const UserCard = ({ user }) => {
           </div>
         </div>
       )}
-      <div
-        className="flex items-center space-x-3 cursor-pointer hover:bg-zinc-700 p-1 rounded-md"
-        onClick={() => setUserMenu(!userMenu)}
-      >
-        <img
-          src={user?.profilePic ? user?.profilePic : discordLogo}
-          alt="User Profile"
-          className="h-10 w-10 rounded-full bg-gray-600"
-        />
-        <div className="w-full">
-          <h1 className="font-bold truncate text-white text-sm">
-            {user?.username}
-          </h1>
-          <p className="truncate text-xs text-[#80858b]">#{user?.userTag}</p>
-        </div>
-      </div>
     </div>
   );
 };
