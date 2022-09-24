@@ -7,8 +7,8 @@ const messageSchema = Schema(
       type: String,
       required: true,
     },
-    ownerId: {
-      type: String,
+    owner: {
+      type: Object,
       required: true,
     },
     serverId: {

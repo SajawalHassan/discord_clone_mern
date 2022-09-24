@@ -86,6 +86,6 @@ module.exports.getServerById = async (req, res) => {
 
     res.json({ server, categories, channels });
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };

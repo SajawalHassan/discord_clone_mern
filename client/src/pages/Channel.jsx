@@ -53,13 +53,13 @@ const Server = () => {
   }
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full">
       <Sidebar />
       <div className="w-full flex">
         <div className="h-full">
           <ChannelSidebar />
         </div>
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-screen overflow-scroll flex flex-col relative">
           <ChannelHeader />
           <ChannelChatRoom />
         </div>

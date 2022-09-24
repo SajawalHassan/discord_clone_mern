@@ -7,31 +7,26 @@ module.exports.createMessage = async (req, res) => {
 
   const newMessage = new Message({
     body,
-    ownerId: req.user._id,
+    owner: req.user,
     serverId,
   });
 
   try {
     await newMessage.save();
-    req.io.emit("message_created", { message: newMessage, user: req.user });
-    res.json({ message: newMessage, user: req.user });
+    req.io.emit("message_created", newMessage);
+    res.json(newMessage);
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
 module.exports.getAllMessagesInServer = async (req, res) => {
   try {
-    const server = await Server.findById(req.params.id);
+    const server = await Server.findById(req.params.serverId);
     const messages = await Message.find({ serverId: server._id });
-    const users = await User.find({
-      _id: messages.map(({ ownerId }) => {
-        return ownerId;
-      }),
-    });
 
-    res.json({ messages, users });
+    res.json(messages);
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };

@@ -8,17 +8,20 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { axiosAuth } from "../../api/axios";
 
-const ChannelInput = () => {
+const ChannelInput = ({ className }) => {
   const [body, setBody] = useState("");
 
   const { channels } = useSelector((state) => state.channel);
-  const { channelId } = useParams();
+  const { channelId, serverId } = useParams();
 
   const handleOnClick = async (e) => {
     e.preventDefault();
     if (!body) return;
     try {
-      await axiosAuth.post("/messages/create", { body });
+      await axiosAuth.post("/messages/create", {
+        body,
+        serverId,
+      });
       setBody("");
     } catch (error) {
       console.log(error.response.data);
@@ -28,9 +31,9 @@ const ChannelInput = () => {
   return (
     <form
       onSubmit={(e) => handleOnClick(e)}
-      className="w-full flex items-center justify-between bg-[#40444B] px-2 rounded-md"
+      className="flex items-center justify-between bg-[#40444B] w-[95%] inset-x-0 mx-auto px-2 rounded-md"
     >
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-2 flex-grow">
         <AddCircle className="message-form-icon" />
         <input
           type="text"

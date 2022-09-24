@@ -20,7 +20,7 @@ const SidebarOption = ({
           className="h-full rounded-3xl group-hover:rounded-xl duration-200 transition-all ease-linear"
         />
       )}
-      <p className="absolute left-14 bg-[#323236] p-2 rounded-md w-max text-white m-2 shadow-md transition-all duration-100 scale-0 group-hover:scale-100 origin-left">
+      <p className="absolute left-14 bg-black p-2 rounded-md w-max text-white m-2 shadow-md transition-all duration-100 scale-0 group-hover:scale-100 origin-left">
         {text}
       </p>
     </div>

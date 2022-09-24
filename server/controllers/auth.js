@@ -74,6 +74,7 @@ module.exports.login = async (req, res) => {
       email: userEmail.email,
       joinedServers: userEmail.joinedServers,
       createdServers: userEmail.createdServers,
+      userTag: userEmail.userTag,
       _id: userEmail._id,
     };
 
@@ -82,6 +83,6 @@ module.exports.login = async (req, res) => {
 
     res.json({ accessToken });
   } catch (error) {
-    console.log({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
