@@ -35,26 +35,24 @@ const Login = () => {
     dispatch(setIsLoading(true));
     let accessToken = "";
     try {
-      const { data } = await axios.post("/auth/login", { email, password });
+      const auth = await axios.post("/auth/login", { email, password });
 
-      localStorage.setItem("accessToken", data.accessToken);
-      accessToken = data.accessToken;
+      localStorage.setItem("accessToken", auth.data.accessToken);
+      accessToken = auth.data.accessToken;
       dispatch(loginSuccess());
-    } catch (error) {
-      dispatch(loginFail(error.response.data));
-    }
-    try {
-      const { data } = await axios.get("/users/me", {
+
+      const user = await axios.get("/users/me", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
 
-      dispatch(setUser(data));
+      dispatch(setUser(user.data));
+
+      navigate("/");
     } catch (error) {
-      console.log(error.response.data);
+      dispatch(loginFail(error.response.data));
     }
-    navigate("/");
   };
   return (
     <div className="h-[100vh] overflow-hidden sm:auth-bg">
