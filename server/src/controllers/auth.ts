@@ -100,7 +100,6 @@ export const refreshToken = async (req: RouteReq, res: Response) => {
   if (!cookies?.jwt)
     return res.status(401).json("Jwt is not present in cookies");
 
-  console.log(cookies.jwt);
   const refreshToken: string = cookies.jwt;
   const REFRESH_TOKEN_SECRET: any = process.env.REFRESH_TOKEN_SECRET;
 
@@ -119,4 +118,21 @@ export const refreshToken = async (req: RouteReq, res: Response) => {
 
     res.json({ accessToken });
   });
+};
+
+export const logoutUser = async (req: RouteReq, res: Response) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(204);
+  const refreshToken = cookies.jwt;
+
+  const foundUser = await User.findOne({ refreshToken });
+  if (!foundUser) {
+    res.clearCookie("jwt", { httpOnly: true, maxAge: 2592000000 });
+    return res.sendStatus(204);
+  }
+
+  await foundUser.updateOne({ $set: { refreshToken: "" } });
+
+  res.clearCookie("jwt", { httpOnly: true, maxAge: 2592000000 });
+  res.sendStatus(204);
 };
