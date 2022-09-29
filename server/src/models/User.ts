@@ -13,6 +13,7 @@ const userSchema: Schema = new Schema(
     profilePic: { type: String, default: "" },
     userTag: { type: String, required: true },
     banner: { type: String, default: "" },
+    refreshToken: { type: String, defualt: "" },
   },
   { timestamps: true }
 );
