@@ -51,15 +51,14 @@ export const registerUser = async (req: RouteReq, res: Response) => {
     await newUser.save();
 
     res.json(newUser);
-  } catch (error) {
-    res.status(500).json({ error });
+  } catch (error: any) {
+    res.status(500).json(error.message);
   }
 };
 
 export const loginUser = async (req: RouteReq, res: Response) => {
   const { email, password } = req.body;
 
-  const ACCESS_TOKEN_SECRET: any = process.env.ACCESS_TOKEN_SECRET;
   const REFRESH_TOKEN_SECRET: any = process.env.REFRESH_TOKEN_SECRET;
 
   try {
@@ -90,8 +89,8 @@ export const loginUser = async (req: RouteReq, res: Response) => {
 
     res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 2592000000 });
     res.json({ accessToken });
-  } catch (error) {
-    res.status(500).json({ error });
+  } catch (error: any) {
+    res.status(500).json(error.message);
   }
 };
 
@@ -103,21 +102,25 @@ export const refreshToken = async (req: RouteReq, res: Response) => {
   const refreshToken: string = cookies.jwt;
   const REFRESH_TOKEN_SECRET: any = process.env.REFRESH_TOKEN_SECRET;
 
-  const foundUser = await User.findOne({ refreshToken });
-  if (!foundUser) return res.status(403).json("User not found");
+  try {
+    const foundUser = await User.findOne({ refreshToken });
+    if (!foundUser) return res.status(403).json("User not found");
 
-  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err: any, user: any) => {
-    if (err) return res.status(403).json(err);
+    jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err: any, user: any) => {
+      if (err) return res.status(403).json(err);
 
-    const payload = {
-      username: user.username,
-      _id: user._id,
-    };
+      const payload = {
+        username: user.username,
+        _id: user._id,
+      };
 
-    const accessToken = generateAccessToken(payload);
+      const accessToken = generateAccessToken(payload);
 
-    res.json({ accessToken });
-  });
+      res.json({ accessToken });
+    });
+  } catch (error: any) {
+    res.status(500).json(error.message);
+  }
 };
 
 export const logoutUser = async (req: RouteReq, res: Response) => {
@@ -125,14 +128,18 @@ export const logoutUser = async (req: RouteReq, res: Response) => {
   if (!cookies?.jwt) return res.sendStatus(204);
   const refreshToken = cookies.jwt;
 
-  const foundUser = await User.findOne({ refreshToken });
-  if (!foundUser) {
+  try {
+    const foundUser = await User.findOne({ refreshToken });
+    if (!foundUser) {
+      res.clearCookie("jwt", { httpOnly: true, maxAge: 2592000000 });
+      return res.sendStatus(204);
+    }
+
+    await foundUser.updateOne({ $set: { refreshToken: "" } });
+
     res.clearCookie("jwt", { httpOnly: true, maxAge: 2592000000 });
-    return res.sendStatus(204);
+    res.sendStatus(204);
+  } catch (error: any) {
+    res.status(500).json(error.message);
   }
-
-  await foundUser.updateOne({ $set: { refreshToken: "" } });
-
-  res.clearCookie("jwt", { httpOnly: true, maxAge: 2592000000 });
-  res.sendStatus(204);
 };
