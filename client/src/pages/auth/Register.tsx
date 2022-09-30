@@ -6,18 +6,19 @@ import FinishButton from "../../components/auth/FinishButton";
 import axios from "../../api/axios";
 
 import { ReactComponent as DiscordTextLogo } from "../../images/discord_text_logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SyntheticEvent, useState } from "react";
 
 const Register = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [month, setMonth] = useState<string>();
-  const [day, setDay] = useState<number>();
-  const [year, setYear] = useState<number>();
+  const [month, setMonth] = useState<string>("");
+  const [day, setDay] = useState<number>(0);
+  const [year, setYear] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -57,6 +58,7 @@ const Register = () => {
 
       setIsLoading(false);
       setError("");
+      navigate("/login");
     } catch (error: any) {
       setIsLoading(false);
       setError(error.response.data);
@@ -64,7 +66,7 @@ const Register = () => {
   };
 
   return (
-    <Auth className="sm:h-[40rem] sm:w-[30rem]">
+    <Auth className="sm:h-[38rem] sm:w-[30rem]">
       <DiscordTextLogo className="mx-auto mb-3" />
       <form
         className="grid place-content-center h-[85%]"
@@ -116,9 +118,9 @@ const Register = () => {
             />
             <input
               className="w-full p-2 rounded-sm outline-none bg-[#202225] text-white"
-              type="number"
+              type="numeric"
               placeholder="Year"
-              value={year}
+              value={year ? year : ""}
               onChange={(e) =>
                 setYear(parseInt((e.target as HTMLInputElement).value))
               }

@@ -1,6 +1,7 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Dispatch, SetStateAction, useState } from "react";
 import DropdownOption from "./DropdownOption";
+
+import { Dispatch, SetStateAction, useState } from "react";
 
 const Dropdown = ({
   placeholder,
@@ -37,15 +38,11 @@ const Dropdown = ({
         <input
           className="bg-transparent max-w-[6rem] outline-none text-white cursor-pointer"
           onClick={() => setMenu(!menu)}
-          value={value}
+          value={value ? value : ""}
+          onChange={() => {}}
           placeholder={placeholder}
           required
         />
-        {/* {!value ? (
-        <h1 className="text-[#A3A6AA]">{placeholder}</h1>
-        ) : (
-          <h1 className="text-white">{value}</h1>
-        )} */}
         <ArrowDropDownIcon className="text-white" />
       </div>
     </div>
