@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAxiosAuth from "./hooks/useAxiosAuth";
+import useLogout from "./hooks/useLogout";
 
 const App = () => {
   const [user, setUser] = useState<any>({});
 
   const axiosAuth = useAxiosAuth();
+  const logout = useLogout();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUsers = async () => {
@@ -19,8 +23,19 @@ const App = () => {
     getUsers();
   }, [axiosAuth]);
 
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
     <div>
+      <button
+        className="p-2 bg-blue-500 rounded-sm"
+        onClick={() => handleLogout()}
+      >
+        Sign out
+      </button>
       <h1>Users</h1>
       {user.username}
     </div>
