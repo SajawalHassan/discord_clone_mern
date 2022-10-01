@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
-import { AuthProvider } from "./context/AuthProvider";
 
+import "./index.css";
+
+import { AuthProvider } from "./context/AuthProvider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
-import Protected from "./pages/Protected";
 import PersistLogin from "./components/auth/PersistLogin";
 
 const root = ReactDOM.createRoot(
@@ -21,10 +20,7 @@ root.render(
       <Router>
         <Routes>
           <Route element={<PersistLogin />}>
-            <Route element={<ProtectedRoute />}>
-              <Route path="/" element={<App />} />
-              <Route path="/protected" element={<Protected />} />
-            </Route>
+            <Route path="/" element={<App />} />
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

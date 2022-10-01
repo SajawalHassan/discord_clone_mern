@@ -1,5 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
 
+interface Props {
+  type: string;
+  label: string;
+  error?: any;
+  min?: number;
+  max?: number;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+}
+
 const InputField = ({
   type,
   label,
@@ -8,15 +18,7 @@ const InputField = ({
   max,
   value,
   setValue,
-}: {
-  type: string;
-  label: string;
-  error?: any;
-  min?: number;
-  max?: number;
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
-}) => {
+}: Props) => {
   return (
     <div>
       <div className="flex items-center mb-1">

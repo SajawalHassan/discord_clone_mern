@@ -3,17 +3,14 @@ import DropdownOption from "./DropdownOption";
 
 import { Dispatch, SetStateAction, useState } from "react";
 
-const Dropdown = ({
-  placeholder,
-  options,
-  value,
-  setValue,
-}: {
+interface Props {
   placeholder: string;
   options: any;
   value: any;
   setValue: Dispatch<SetStateAction<any>>;
-}) => {
+}
+
+const Dropdown = ({ placeholder, options, value, setValue }: Props) => {
   const [menu, setMenu] = useState<boolean>(false);
 
   return (
@@ -36,7 +33,7 @@ const Dropdown = ({
         onClick={() => setMenu(!menu)}
       >
         <input
-          className="bg-transparent max-w-[6rem] outline-none text-white cursor-pointer"
+          className="bg-transparent max-w-[4.5rem] sm:max-w-[6rem] outline-none text-white cursor-pointer"
           onClick={() => setMenu(!menu)}
           value={value ? value : ""}
           onChange={() => {}}

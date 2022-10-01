@@ -1,12 +1,10 @@
-const FinishButton = ({
-  text,
-  className,
-  isLoading,
-}: {
+interface Props {
   text: string;
   className?: string;
   isLoading: boolean;
-}) => {
+}
+
+const FinishButton = ({ text, className, isLoading }: Props) => {
   return (
     <button
       type="submit"

@@ -1,16 +1,18 @@
 import { Dispatch, SetStateAction } from "react";
 
+interface Props {
+  active?: boolean;
+  option: string;
+  setMenu: Dispatch<SetStateAction<boolean>>;
+  setValue: Dispatch<SetStateAction<string>>;
+}
+
 const DropdownOption = ({
   active = false,
   option,
   setMenu,
   setValue,
-}: {
-  active?: boolean;
-  option: string;
-  setMenu: Dispatch<SetStateAction<boolean>>;
-  setValue: Dispatch<SetStateAction<string>>;
-}) => {
+}: Props) => {
   const handleOnClick = () => {
     setValue(option);
     setMenu(false);

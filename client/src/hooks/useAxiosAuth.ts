@@ -22,7 +22,7 @@ const useAxiosAuth = () => {
       (res) => res,
       async (err: any) => {
         const req = err?.config;
-        if (err.response.status === 403 && !req.sent) {
+        if (err?.response?.status === 403 && !req.sent) {
           req.sent = true;
           // Generating new access token and setting it on header
           const newAccessToken = await refresh();
