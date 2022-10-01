@@ -20,10 +20,10 @@ const app: Application = express();
 const server: any = createServer(app);
 const PORT: any = process.env.PORT || 5000;
 const MONGO_URI: any = process.env.MONGO_URI;
-const origin: string[] = [
-  "http://localhost:3000",
-  "https://discord-clone-1f12.vercel.app",
-];
+const origin: string =
+  process.env.NODE_ENV === "production"
+    ? "https://discord-clone-1f12.vercel.app"
+    : "http://localhost:3000";
 
 // Socket.io
 const io = new Server(server, {

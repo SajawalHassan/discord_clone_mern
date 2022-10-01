@@ -5,12 +5,15 @@ import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 
 import { ReactComponent as DiscordTextLogo } from "../../images/discord_text_logo.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SyntheticEvent, useState } from "react";
 
 const Login = () => {
   const { setAuth } = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -36,7 +39,7 @@ const Login = () => {
       setAuth && setAuth({ user, accessToken });
       setIsLoading(false);
       setError("");
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error: any) {
       setIsLoading(false);
       setError(error.response.data);

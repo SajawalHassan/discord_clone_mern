@@ -26,7 +26,6 @@ const useAxiosAuth = () => {
           req.sent = true;
           // Generating new access token and setting it on header
           const newAccessToken = await refresh();
-          console.log(newAccessToken);
           req.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosPrivate(req); // Making the request again
         }

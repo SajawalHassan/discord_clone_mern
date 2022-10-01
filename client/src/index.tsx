@@ -9,6 +9,8 @@ import { AuthProvider } from "./context/AuthProvider";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import Protected from "./pages/Protected";
+import PersistLogin from "./components/auth/PersistLogin";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,8 +20,11 @@ root.render(
     <AuthProvider>
       <Router>
         <Routes>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<App />} />
+          <Route element={<PersistLogin />}>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<App />} />
+              <Route path="/protected" element={<Protected />} />
+            </Route>
           </Route>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

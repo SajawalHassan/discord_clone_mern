@@ -87,7 +87,12 @@ export const loginUser = async (req: RouteReq, res: Response) => {
 
     await user.updateOne({ $set: { refreshToken: refreshToken } });
 
-    res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 2592000000 });
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      maxAge: 2592000000,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production" ? true : false,
+    });
     res.json({ accessToken });
   } catch (error: any) {
     res.status(500).json(error.message);

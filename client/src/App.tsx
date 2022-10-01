@@ -11,7 +11,6 @@ const App = () => {
       try {
         const { data } = await axiosAuth.get("/users/me");
 
-        console.log(data);
         setUser(data);
       } catch (error) {
         console.log(error);
