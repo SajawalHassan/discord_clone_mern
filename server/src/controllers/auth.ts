@@ -33,6 +33,8 @@ export const registerUser = async (req: RouteReq, res: Response) => {
     }
   };
 
+  const emailExists = await User.findOne({ email });
+  if (emailExists) return res.status(400).json("Email already exists");
   const userTag = await generateUserTag();
   password = await bcrypt.hash(password, 10);
 

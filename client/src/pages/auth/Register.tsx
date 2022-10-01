@@ -83,7 +83,7 @@ const Register = () => {
             max={255}
             value={username}
             setValue={setUsername}
-            error={error.includes("username") && error}
+            error={error.toLowerCase().includes("username") && error}
           />
           <InputField
             type="email"
@@ -92,7 +92,7 @@ const Register = () => {
             max={255}
             value={email}
             setValue={setEmail}
-            error={error.includes("email") && error}
+            error={error.toLowerCase().includes("email") && error}
           />
           <InputField
             type="password"
@@ -101,7 +101,7 @@ const Register = () => {
             max={255}
             value={password}
             setValue={setPassword}
-            error={error.includes("password") && error}
+            error={error.toLowerCase().includes("password") && error}
           />
           <div className="grid grid-cols-3 gap-x-3">
             <Dropdown

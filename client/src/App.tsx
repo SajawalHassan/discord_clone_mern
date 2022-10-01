@@ -31,13 +31,14 @@ const App = () => {
   return (
     <div>
       <button
-        className="p-2 bg-blue-500 rounded-sm"
+        className="p-2 bg-blue-500 rounded-sm text-white"
         onClick={() => handleLogout()}
       >
         Sign out
       </button>
       <h1>Users</h1>
       {user.username}
+      {user.email}
     </div>
   );
 };

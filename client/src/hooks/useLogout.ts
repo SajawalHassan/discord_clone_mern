@@ -7,7 +7,7 @@ const useLogout = () => {
   const axiosAuth = useAxiosAuth();
 
   const logout = async () => {
-    setAuth && setAuth({});
+    setAuth && (await setAuth({}));
     try {
       await axiosAuth.delete("/auth/logout");
     } catch (error) {

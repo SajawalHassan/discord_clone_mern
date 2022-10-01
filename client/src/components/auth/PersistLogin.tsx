@@ -23,19 +23,6 @@ const PersistLogin = () => {
     };
 
     auth && !auth?.accessToken && verifyRefreshToken();
-
-    const getUser = async () => {
-      try {
-        const { data } = await axiosAuth.get("/users/me");
-        setAuth &&
-          setAuth((prev) => {
-            return { ...prev, user: data };
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    !auth.user ? getUser() : setIsLoading(false);
   }, [auth, axiosAuth, refresh, setAuth]);
 
   return isLoading ? <p>Loading</p> : <Outlet />;

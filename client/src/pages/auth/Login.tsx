@@ -64,7 +64,7 @@ const Login = () => {
             max={255}
             value={email}
             setValue={setEmail}
-            error={error?.includes("email") && error}
+            error={error}
           />
           <InputField
             type="password"
@@ -73,7 +73,7 @@ const Login = () => {
             max={255}
             value={password}
             setValue={setPassword}
-            error={error?.includes("password") && error}
+            error={error}
           />
         </div>
         <Link to="/login" className="auth-link mt-3">
