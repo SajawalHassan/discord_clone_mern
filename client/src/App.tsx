@@ -46,6 +46,7 @@ const App = () => {
 
   useEffect(() => {
     if (menuIsOpen) document.body.style.overflow = "hidden";
+    else document.body.style.overflowY = "scroll";
   }, [menuIsOpen]);
 
   const handleLogout = async () => {
@@ -55,8 +56,8 @@ const App = () => {
 
   return (
     <div>
-      <article className="bg-[#404EED] h-[45rem] w-screen relative overflow-x-hidden">
-        <nav className="p-3 flex items-center justify-between">
+      <main className="bg-[#404EED] h-[45rem] w-screen relative overflow-x-hidden p-3">
+        <nav className="flex items-center justify-between">
           <Link to="/">
             <DiscordTextLogo fill="#fff" />
           </Link>
@@ -101,7 +102,7 @@ const App = () => {
                   <SidebarOption text="Support" />
                   <SidebarOption text="Blog" />
                   <SidebarOption text="Careers" />
-                  {auth && auth.accessToken && (
+                  {auth.accessToken && (
                     <SidebarOption
                       text="Sign out"
                       onClick={() => handleLogout()}
@@ -116,8 +117,27 @@ const App = () => {
             </menu>
           )}
         </nav>
+        <article className="h-[70%] flex flex-col justify-center">
+          <div>
+            <h1 className="text-white font-black text-3xl uppercase">
+              Imagine a place...
+            </h1>
+            <p className="text-sm font-light text-white">
+              ...where you can belong to a school club, a gaming group, or a
+              worldwide art community. Where just you and a handful of friends
+              can spend time together. A place that makes it easy to talk every
+              day and hang out more often.
+            </p>
+          </div>
+          <Link
+            className="py-4 px-7 mt-6 rounded-full bg-[#23272A] hover:bg-[#36393F] hover:shadow-2xl transition-all duration-300 w-max text-lg font-bold text-white"
+            to={auth.accessToken ? `/me` : `/register`}
+          >
+            Open Discord in your browser
+          </Link>
+        </article>
         <People className="absolute bottom-0 w-[500px] h-[300px] -ml-[88px]" />
-      </article>
+      </main>
     </div>
   );
 };
