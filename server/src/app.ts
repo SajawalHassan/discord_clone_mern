@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth";
 import verifyJwt from "./middleware/verifyJwt";
 import protectedRoutes from "./routes/protected";
 import cookieParser from "cookie-parser";
+import usersRoutes from "./routes/users";
 
 import { Server } from "socket.io";
 import { createServer } from "http";
@@ -41,9 +42,10 @@ io.on("connection", (socket: any) => {
 });
 
 // Middleware
+app.use(cors({ origin, credentials: true }));
+app.set("Access-Control-Allow-Origin", origin);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin }));
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(helmet());
@@ -56,6 +58,7 @@ app.use((req: RouteReq, _res: Response, next: NextFunction) => {
 app.use("/api/auth", authRoutes);
 app.use(verifyJwt);
 app.use("/api/protected", protectedRoutes);
+app.use("/api/users", usersRoutes);
 
 // MongoDB
 mongoose.connect(MONGO_URI, () => console.log("Connected to mongodb!"));

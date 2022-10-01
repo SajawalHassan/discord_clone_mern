@@ -5,21 +5,27 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
+import { AuthProvider } from "./context/AuthProvider";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<App />} />
+          </Route>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   </React.StrictMode>
 );
 
