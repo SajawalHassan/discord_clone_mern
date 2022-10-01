@@ -7,12 +7,14 @@ import useAuth from "../../hooks/useAuth";
 import { ReactComponent as DiscordTextLogo } from "../../images/discord_text_logo.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { SyntheticEvent, useState } from "react";
+import useAxiosAuth from "../../hooks/useAxiosAuth";
 
 const Login = () => {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosAuth = useAxiosAuth();
   const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState<string>("");
@@ -32,11 +34,9 @@ const Login = () => {
 
       const accessToken = auth?.data.accessToken;
 
-      const user = await axios.get(`/users/me`, {
-        headers: { authorization: `Bearer ${accessToken}` },
-      });
+      const user = await axiosAuth.get("/users/me");
 
-      setAuth && setAuth({ user, accessToken });
+      setAuth && setAuth({ user: user.data, accessToken });
       setIsLoading(false);
       setError("");
       navigate(from, { replace: true });

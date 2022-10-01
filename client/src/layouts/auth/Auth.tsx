@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import { ReactComponent as Background } from "../../images/auth_background.svg";
 
 const Auth = ({
@@ -8,6 +10,13 @@ const Auth = ({
   children: ReactNode;
   className: string;
 }) => {
+  const { auth } = useAuth();
+
+  useEffect(() => {
+    auth && auth.acccessToken && <Navigate to="/" replace />;
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="h-[100vh] overflow-hidden">
       <div className="hidden sm:block sm:h-screen">
