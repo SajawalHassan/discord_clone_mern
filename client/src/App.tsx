@@ -11,7 +11,8 @@ import { ReactComponent as DiscordTextLogo } from "./images/discord_text_logo.sv
 import { ReactComponent as MenuIcon } from "./images/menu_icon.svg";
 import { ReactComponent as DownloadIcon } from "./images/download_icon.svg";
 import { ReactComponent as Aliens } from "./images/aliens.svg";
-import React, { useEffect, useRef, useState } from "react";
+import { ReactComponent as Clouds } from "./images/clouds.svg";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import useOutsideAlerter from "./hooks/useOutsideAlerter";
 
@@ -155,8 +156,8 @@ const App = () => {
             </menu>
           )}
         </nav>
-        <article className="h-[70%] flex flex-col justify-center md:w-[60%] lg:w-full lg:px-6">
-          <div className="lg:text-center lg:max-w-[40rem] xl:max-w-[45rem] xl:mt-28 lg:mx-auto">
+        <article className="h-[70%] flex flex-col justify-center md:w-[60%] lg:w-full lg:px-6 z-50">
+          <div className="lg:text-center lg:max-w-[40rem] xl:max-w-[45rem] xl:mt-28 lg:mx-auto z-50">
             <h1 className="text-white font-black text-4xl sm:text-5xl uppercase lg:text-6xl xl:text-7xl">
               Imagine a place...
             </h1>
@@ -168,12 +169,13 @@ const App = () => {
             </p>
           </div>
           <Link
-            className="py-4 px-7 mt-6 rounded-full bg-[#23272A] hover:bg-[#36393F] hover:shadow-2xl transition-all duration-300 w-max text-lg font-bold text-white lg:mx-auto"
+            className="py-4 px-7 mt-6 rounded-full bg-[#23272A] hover:bg-[#36393F] hover:shadow-2xl transition-all duration-300 w-max text-lg font-bold text-white lg:mx-auto z-50"
             to={auth.accessToken ? `/me` : `/register`}
           >
             Open Discord in your browser
           </Link>
         </article>
+        <Clouds className="absolute bottom-0 hidden lg:block" />
         <People className="absolute bottom-0 w-[500px] h-[300px] -ml-[88px] md:hidden lg:block lg:w-[700px] lg:h-[400px]" />
         <Aliens className="absolute bottom-0 right-0 hidden md:block" />
       </main>
