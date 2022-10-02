@@ -48,7 +48,7 @@ const Login = () => {
 
   return (
     <Auth className="sm:h-[28rem] sm:w-[30rem]">
-      <DiscordTextLogo className="mx-auto mb-3" />
+      <DiscordTextLogo className="mx-auto mb-3" fill="#fff" />
       <form
         className="flex flex-col justify-center h-[85%]"
         onSubmit={(e) => handleSubmit(e)}

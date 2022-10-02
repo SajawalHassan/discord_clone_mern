@@ -23,6 +23,7 @@ const SidebarOption = ({
           ? `text-[#24BAF4] font-light bg-[#F6F6F6] hover:underline rounded-md`
           : `text-black hover:underline font-light`
       }`}
+      title={text}
     >
       {text}
     </Link>
