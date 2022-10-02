@@ -220,92 +220,101 @@ const App = () => {
           Open Discord in your browser
         </Link>
       </section>
-      <footer className="bg-[#23272A] px-4 pt-10 pb-2 space-y-6">
-        <h1 className="font-black text-3xl text-[#5865F2] uppercase">
-          Imagine a <br /> place
-        </h1>
-        <div className="flex items-center space-x-6">
-          <a
-            href="https://twitter.com/discord"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <TwitterIcon className="cursor-pointer" />
-          </a>
-          <a
-            href="https://www.instagram.com/discord/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <InstagramIcon className="cursor-pointer" />
-          </a>
-          <a
-            href="https://www.facebook.com/discord/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <FacebookIcon className="cursor-pointer" />
-          </a>
-          <a
-            href="https://www.youtube.com/discord"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <YouTubeIcon className="cursor-pointer" />
-          </a>
-        </div>
-        <div className="grid grid-cols-2 gap-5">
-          <div className="space-y-4">
-            <h1 className="footer-heading">Product</h1>
-            <p className="footer-link">Download</p>
-            <p className="footer-link">Nitro</p>
-            <p className="footer-link">Status</p>
+      <footer className="bg-[#23272A]">
+        <div className="max-w-[70rem] px-4 pt-10 pb-2 space-y-6 mx-auto">
+          <div className="sm:flex md:px-10 sm:justify-between space-y-6">
+            <div className="space-y-6">
+              <h1 className="font-black text-3xl text-[#5865F2] uppercase">
+                Imagine a <br /> place
+              </h1>
+              <div className="flex items-center space-x-6">
+                <a
+                  href="https://twitter.com/discord"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <TwitterIcon className="cursor-pointer" />
+                </a>
+                <a
+                  href="https://www.instagram.com/discord/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <InstagramIcon className="cursor-pointer" />
+                </a>
+                <a
+                  href="https://www.facebook.com/discord/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FacebookIcon className="cursor-pointer" />
+                </a>
+                <a
+                  href="https://www.youtube.com/discord"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <YouTubeIcon className="cursor-pointer" />
+                </a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:pl-4 md:grid-cols-4 gap-y-5 gap-x-14 md:gap-x-5">
+              <div className="space-y-4">
+                <h1 className="footer-heading">Product</h1>
+                <p className="footer-link">Download</p>
+                <p className="footer-link">Nitro</p>
+                <p className="footer-link">Status</p>
+              </div>
+              <div className="space-y-4">
+                <h1 className="footer-heading">Company</h1>
+                <p className="footer-link">About</p>
+                <p className="footer-link">Jobs</p>
+                <p className="footer-link">Branding</p>
+                <p className="footer-link">Newsroom</p>
+              </div>
+              <div className="space-y-4">
+                <h1 className="footer-heading">Resources</h1>
+                <p className="footer-link">Collage</p>
+                <p className="footer-link">Support</p>
+                <p className="footer-link">Safety</p>
+                <p className="footer-link">blog</p>
+                <p className="footer-link">feedback</p>
+                <p className="footer-link">developers</p>
+                <p className="footer-link">streamKit</p>
+              </div>
+              <div className="space-y-4">
+                <h1 className="footer-heading">polices</h1>
+                <p className="footer-link">terms</p>
+                <p className="footer-link">Privacy</p>
+                <p className="footer-link">cookie settings</p>
+                <p className="footer-link">guidlines</p>
+                <p className="footer-link">acknowledgements</p>
+                <p className="footer-link">licenses</p>
+                <p className="footer-link">moderation</p>
+              </div>
+            </div>
           </div>
-          <div className="space-y-4">
-            <h1 className="footer-heading">Company</h1>
-            <p className="footer-link">About</p>
-            <p className="footer-link">Jobs</p>
-            <p className="footer-link">Branding</p>
-            <p className="footer-link">Newsroom</p>
+          <div className="border border-[#5865F2]" />
+          <div className="flex items-center justify-between">
+            <DiscordTextLogo fill="#fff" />
+            {auth && auth.accessToken ? (
+              <img
+                src={
+                  auth.user?.profilePic ? auth.user?.profilePic : DiscordLogo
+                }
+                alt="Profile"
+                className="h-10 w-10 rounded-full bg-gray-600 z-20"
+              />
+            ) : (
+              <Link
+                to="/register"
+                className="py-2 hover:shadow-xl transition-all duration-300 text-sm px-3 rounded-full bg-[#5865F2] z-20 text-white font-bold hover:bg-[#7983F5]"
+              >
+                Sign up
+              </Link>
+            )}
           </div>
-          <div className="space-y-4">
-            <h1 className="footer-heading">Resources</h1>
-            <p className="footer-link">Collage</p>
-            <p className="footer-link">Support</p>
-            <p className="footer-link">Safety</p>
-            <p className="footer-link">blog</p>
-            <p className="footer-link">feedback</p>
-            <p className="footer-link">developers</p>
-            <p className="footer-link">streamKit</p>
-          </div>
-          <div className="space-y-4">
-            <h1 className="footer-heading">polices</h1>
-            <p className="footer-link">terms</p>
-            <p className="footer-link">Privacy</p>
-            <p className="footer-link">cookie settings</p>
-            <p className="footer-link">guidlines</p>
-            <p className="footer-link">acknowledgements</p>
-            <p className="footer-link">licenses</p>
-            <p className="footer-link">moderation</p>
-          </div>
-        </div>
-        <div className="border border-[#5865F2]" />
-        <div className="flex items-center justify-between">
-          <DiscordTextLogo fill="#fff" />
-          {auth && auth.accessToken ? (
-            <img
-              src={auth.user?.profilePic ? auth.user?.profilePic : DiscordLogo}
-              alt="Profile"
-              className="h-10 w-10 rounded-full bg-gray-600 z-20"
-            />
-          ) : (
-            <Link
-              to="/register"
-              className="py-2 hover:shadow-xl transition-all duration-300 text-sm px-3 rounded-full bg-[#5865F2] z-20 text-white font-bold hover:bg-[#7983F5]"
-            >
-              Sign up
-            </Link>
-          )}
         </div>
       </footer>
     </div>
