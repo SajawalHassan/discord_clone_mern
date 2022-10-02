@@ -5,6 +5,7 @@ import DiscordLogo from "./images/discord_logo.png";
 import SidebarOption from "./components/home/SidebarOption";
 import useLogout from "./hooks/useLogout";
 import useAxiosAuth from "./hooks/useAxiosAuth";
+import useOutsideAlerter from "./hooks/useOutsideAlerter";
 
 import { ReactComponent as People } from "./images/people.svg";
 import { ReactComponent as DiscordTextLogo } from "./images/discord_text_logo.svg";
@@ -12,9 +13,12 @@ import { ReactComponent as MenuIcon } from "./images/menu_icon.svg";
 import { ReactComponent as DownloadIcon } from "./images/download_icon.svg";
 import { ReactComponent as Aliens } from "./images/aliens.svg";
 import { ReactComponent as Clouds } from "./images/clouds.svg";
+import { ReactComponent as GroupsDemo } from "./images/demo_of_groups.svg";
+import { ReactComponent as MembersDemo } from "./images/demo_of_members.svg";
+import { ReactComponent as AliensHangingOut } from "./images/aliens_hanging_out.svg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import useOutsideAlerter from "./hooks/useOutsideAlerter";
+import HomeExample from "./components/home/HomeExample";
 
 const App = () => {
   const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
@@ -107,7 +111,7 @@ const App = () => {
             ) : (
               <Link
                 to="/login"
-                className="py-2 hover:text-blue-700 hover:shadow-xl transition-all duration-300 text-sm px-3 rounded-full bg-white"
+                className="py-2 hover:text-blue-700 hover:shadow-xl transition-all duration-300 text-sm px-3 rounded-full bg-white z-20"
               >
                 Login
               </Link>
@@ -132,7 +136,7 @@ const App = () => {
             )}
           </div>
           {sidebarIsOpen && (
-            <menu className="fixed h-screen inset-0 m-auto w-screen bg-black transition-all duration-200 bg-opacity-30 z-20">
+            <menu className="fixed h-screen inset-0 m-auto w-screen bg-black transition-all duration-200 bg-opacity-30 z-50">
               <div className="w-[330px] rounded-l-lg bg-white float-right sidebar-animation h-screen py-6 pl-6 pr-9 relative">
                 <div className="flex items-center justify-between">
                   <DiscordTextLogo fill="#000" />
@@ -159,7 +163,7 @@ const App = () => {
             </menu>
           )}
         </nav>
-        <article className="h-[70%] flex flex-col justify-center md:w-[60%] lg:w-full lg:px-6 ">
+        <section className="h-[70%] flex flex-col justify-center md:w-[60%] lg:w-full lg:px-6">
           <div className="lg:text-center lg:max-w-[40rem] xl:max-w-[45rem] xl:mt-28 lg:mx-auto z-20">
             <h1 className="text-white font-black text-4xl sm:text-5xl uppercase lg:text-6xl xl:text-7xl">
               Imagine a place...
@@ -177,8 +181,28 @@ const App = () => {
           >
             Open Discord in your browser
           </Link>
-        </article>
+        </section>
       </main>
+      <section className="relative w-screen overflow-x-hidden flex flex-col items-center">
+        <HomeExample
+          Svg={GroupsDemo}
+          text="Create an invite-only place where you belong"
+          description="Discord servers are organized into topic-based channels where you can collaborate, share, and just talk about your day without clogging up a group chat."
+          className="bg-white"
+        />
+        <HomeExample
+          Svg={MembersDemo}
+          text="Where hanging out is easy"
+          description="Grab a seat in a voice channel when you’re free. Friends in your server can see you’re around and instantly pop in to talk without having to call."
+          className="bg-[#F6F6F6]"
+        />
+        <HomeExample
+          Svg={AliensHangingOut}
+          text="From few to a fandom"
+          description="DGet any community running with moderation tools and custom member access. Give members special powers, set up private channels, and more."
+          className="bg-white"
+        />
+      </section>
     </div>
   );
 };
