@@ -6,6 +6,7 @@ import SidebarOption from "./components/home/SidebarOption";
 import useLogout from "./hooks/useLogout";
 import useAxiosAuth from "./hooks/useAxiosAuth";
 import useOutsideAlerter from "./hooks/useOutsideAlerter";
+import HomeExample from "./components/home/HomeExample";
 
 import { ReactComponent as People } from "./images/people.svg";
 import { ReactComponent as DiscordTextLogo } from "./images/discord_text_logo.svg";
@@ -16,9 +17,13 @@ import { ReactComponent as Clouds } from "./images/clouds.svg";
 import { ReactComponent as GroupsDemo } from "./images/demo_of_groups.svg";
 import { ReactComponent as MembersDemo } from "./images/demo_of_members.svg";
 import { ReactComponent as AliensHangingOut } from "./images/aliens_hanging_out.svg";
+import { ReactComponent as Stars } from "./images/stars.svg";
+import { ReactComponent as TwitterIcon } from "./images/twitter_icon.svg";
+import { ReactComponent as InstagramIcon } from "./images/instagram_icon.svg";
+import { ReactComponent as FacebookIcon } from "./images/facebook_icon.svg";
+import { ReactComponent as YouTubeIcon } from "./images/youtube_icon.svg";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import HomeExample from "./components/home/HomeExample";
 
 const App = () => {
   const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
@@ -66,7 +71,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <main className="bg-[#404EED] h-[45rem] xl:h-[40rem] w-screen relative overflow-x-hidden p-3">
         <Clouds className="absolute bottom-0 hidden lg:block z-10" />
         <People className="z-20 absolute bottom-0 w-[500px] h-[300px] -ml-[88px] md:hidden lg:block lg:w-[700px] lg:h-[400px]" />
@@ -199,10 +204,110 @@ const App = () => {
         <HomeExample
           Svg={AliensHangingOut}
           text="From few to a fandom"
-          description="DGet any community running with moderation tools and custom member access. Give members special powers, set up private channels, and more."
+          description="Get any community running with moderation tools and custom member access. Give members special powers, set up private channels, and more."
           className="bg-white"
         />
       </section>
+      <section className="relative text-center space-y-7 flex flex-col items-center overflow-x-hidden mb-10">
+        <div>
+          <h1 className="text-2xl font-bold">Ready to start your journey?</h1>
+          <Stars className="absolute inset-x-0 mx-auto z-10 -top-3" />
+        </div>
+        <Link
+          className="py-4 px-7 rounded-full bg-[#23272A] hover:bg-[#36393F] hover:shadow-2xl transition-all duration-300 w-max text-lg font-bold text-white mx-auto"
+          to={auth.accessToken ? `/me` : `/register`}
+        >
+          Open Discord in your browser
+        </Link>
+      </section>
+      <footer className="bg-[#23272A] px-4 pt-10 pb-2 space-y-6">
+        <h1 className="font-black text-3xl text-[#5865F2] uppercase">
+          Imagine a <br /> place
+        </h1>
+        <div className="flex items-center space-x-6">
+          <a
+            href="https://twitter.com/discord"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <TwitterIcon className="cursor-pointer" />
+          </a>
+          <a
+            href="https://www.instagram.com/discord/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <InstagramIcon className="cursor-pointer" />
+          </a>
+          <a
+            href="https://www.facebook.com/discord/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FacebookIcon className="cursor-pointer" />
+          </a>
+          <a
+            href="https://www.youtube.com/discord"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <YouTubeIcon className="cursor-pointer" />
+          </a>
+        </div>
+        <div className="grid grid-cols-2 gap-5">
+          <div className="space-y-4">
+            <h1 className="footer-heading">Product</h1>
+            <p className="footer-link">Download</p>
+            <p className="footer-link">Nitro</p>
+            <p className="footer-link">Status</p>
+          </div>
+          <div className="space-y-4">
+            <h1 className="footer-heading">Company</h1>
+            <p className="footer-link">About</p>
+            <p className="footer-link">Jobs</p>
+            <p className="footer-link">Branding</p>
+            <p className="footer-link">Newsroom</p>
+          </div>
+          <div className="space-y-4">
+            <h1 className="footer-heading">Resources</h1>
+            <p className="footer-link">Collage</p>
+            <p className="footer-link">Support</p>
+            <p className="footer-link">Safety</p>
+            <p className="footer-link">blog</p>
+            <p className="footer-link">feedback</p>
+            <p className="footer-link">developers</p>
+            <p className="footer-link">streamKit</p>
+          </div>
+          <div className="space-y-4">
+            <h1 className="footer-heading">polices</h1>
+            <p className="footer-link">terms</p>
+            <p className="footer-link">Privacy</p>
+            <p className="footer-link">cookie settings</p>
+            <p className="footer-link">guidlines</p>
+            <p className="footer-link">acknowledgements</p>
+            <p className="footer-link">licenses</p>
+            <p className="footer-link">moderation</p>
+          </div>
+        </div>
+        <div className="border border-[#5865F2]" />
+        <div className="flex items-center justify-between">
+          <DiscordTextLogo fill="#fff" />
+          {auth && auth.accessToken ? (
+            <img
+              src={auth.user?.profilePic ? auth.user?.profilePic : DiscordLogo}
+              alt="Profile"
+              className="h-10 w-10 rounded-full bg-gray-600 z-20"
+            />
+          ) : (
+            <Link
+              to="/register"
+              className="py-2 hover:shadow-xl transition-all duration-300 text-sm px-3 rounded-full bg-[#5865F2] z-20 text-white font-bold hover:bg-[#7983F5]"
+            >
+              Sign up
+            </Link>
+          )}
+        </div>
+      </footer>
     </div>
   );
 };

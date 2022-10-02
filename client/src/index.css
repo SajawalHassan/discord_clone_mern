@@ -6,6 +6,12 @@
   .auth-link {
     @apply text-blue-500 hover:underline cursor-pointer text-sm w-max;
   }
+  .footer-heading {
+    @apply capitalize text-[#5865F2];
+  }
+  .footer-link {
+    @apply hover:underline cursor-pointer text-white text-sm capitalize;
+  }
 }
 
 body {
