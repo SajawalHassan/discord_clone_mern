@@ -64,11 +64,14 @@ const App = () => {
   return (
     <div>
       <main className="bg-[#404EED] h-[45rem] xl:h-[40rem] w-screen relative overflow-x-hidden p-3">
-        <nav className="flex items-center justify-between max-w-[70rem] mx-auto">
-          <Link to="/">
+        <Clouds className="absolute bottom-0 hidden lg:block z-10" />
+        <People className="z-20 absolute bottom-0 w-[500px] h-[300px] -ml-[88px] md:hidden lg:block lg:w-[700px] lg:h-[400px]" />
+        <Aliens className="z-20 absolute bottom-0 right-0 hidden md:block" />
+        <nav className="flex items-center justify-between max-w-[70rem] mx-auto z-20">
+          <Link to="/" className="z-20">
             <DiscordTextLogo fill="#fff" />
           </Link>
-          <div className="hidden lg:flex lg:items-center lg:space-x-10 lg:text-white lg:font-bold">
+          <div className="hidden lg:flex lg:items-center lg:space-x-10 lg:text-white lg:font-bold z-20">
             <Link className="hover:underline" to="#">
               Download
             </Link>
@@ -98,7 +101,7 @@ const App = () => {
                   auth.user?.profilePic ? auth.user?.profilePic : DiscordLogo
                 }
                 alt="Profile"
-                className="h-10 w-10 rounded-full bg-gray-600 cursor-pointer"
+                className="h-10 w-10 rounded-full bg-gray-600 cursor-pointer z-20"
                 onClick={() => setProfileMenuIsOpen(true)}
               />
             ) : (
@@ -115,7 +118,7 @@ const App = () => {
             />
             {profileMenuIsOpen && (
               <menu
-                className="absolute top-12 right-16 lg:right-4 py-1 w-[10rem] bg-[#23272A] rounded-sm"
+                className="absolute top-12 right-16 lg:right-4 py-1 w-[10rem] bg-[#23272A] rounded-sm z-20"
                 ref={menuRef}
               >
                 <h1
@@ -129,7 +132,7 @@ const App = () => {
             )}
           </div>
           {sidebarIsOpen && (
-            <menu className="fixed h-screen inset-0 m-auto z-50 w-screen bg-black transition-all duration-200 bg-opacity-30">
+            <menu className="fixed h-screen inset-0 m-auto w-screen bg-black transition-all duration-200 bg-opacity-30 z-20">
               <div className="w-[330px] rounded-l-lg bg-white float-right sidebar-animation h-screen py-6 pl-6 pr-9 relative">
                 <div className="flex items-center justify-between">
                   <DiscordTextLogo fill="#000" />
@@ -156,8 +159,8 @@ const App = () => {
             </menu>
           )}
         </nav>
-        <article className="h-[70%] flex flex-col justify-center md:w-[60%] lg:w-full lg:px-6 z-50">
-          <div className="lg:text-center lg:max-w-[40rem] xl:max-w-[45rem] xl:mt-28 lg:mx-auto z-50">
+        <article className="h-[70%] flex flex-col justify-center md:w-[60%] lg:w-full lg:px-6 ">
+          <div className="lg:text-center lg:max-w-[40rem] xl:max-w-[45rem] xl:mt-28 lg:mx-auto z-20">
             <h1 className="text-white font-black text-4xl sm:text-5xl uppercase lg:text-6xl xl:text-7xl">
               Imagine a place...
             </h1>
@@ -169,15 +172,12 @@ const App = () => {
             </p>
           </div>
           <Link
-            className="py-4 px-7 mt-6 rounded-full bg-[#23272A] hover:bg-[#36393F] hover:shadow-2xl transition-all duration-300 w-max text-lg font-bold text-white lg:mx-auto z-50"
+            className="py-4 px-7 mt-6 rounded-full bg-[#23272A] hover:bg-[#36393F] hover:shadow-2xl transition-all duration-300 w-max text-lg font-bold text-white lg:mx-auto z-20"
             to={auth.accessToken ? `/me` : `/register`}
           >
             Open Discord in your browser
           </Link>
         </article>
-        <Clouds className="absolute bottom-0 hidden lg:block" />
-        <People className="absolute bottom-0 w-[500px] h-[300px] -ml-[88px] md:hidden lg:block lg:w-[700px] lg:h-[400px]" />
-        <Aliens className="absolute bottom-0 right-0 hidden md:block" />
       </main>
     </div>
   );
